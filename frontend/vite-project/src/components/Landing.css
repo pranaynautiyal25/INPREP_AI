@@ -1,76 +1,55 @@
-/* Full page */
+/* Main background */
 .landing-main {
-    height: 100vh;
+    min-height: 100vh;
+    background-color: #0f0f0f;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Card */
 .landing-card {
-    background-color: white;
-    padding: 60px 60px;
-    width: 420px;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    background-color: #1c1c1c;
+    padding: 40px;
+    border-radius: 12px;
+    width: 400px;
     text-align: center;
-    animation: slideUp 0.5s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    color: white;
+    border: 1px solid #333;
 }
 
 /* Heading */
 .landing-card h1 {
-    font-size: 36px;
-    margin-bottom: 35px;
-    color: #4facfe;
-    letter-spacing: 1px;
-    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 26px;
 }
 
-/* Section */
+/* Tagline */
+.tagline {
+    color: #bbbbbb;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* Sections */
 .landing-section {
-    margin-bottom: 28px;
-    font-size: 15px;
-    color: #555;
-    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 /* Buttons */
 .landing-section button {
-    margin-top: 15px;
-    width: 70%;
-    padding: 13px;
+    margin-top: 8px;
+    padding: 10px 18px;
     border: none;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
     border-radius: 8px;
+    background-color: #ff6b00;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 15px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    width: 100%;
 }
 
-/* Hover */
 .landing-section button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
-}
-
-.landing-section button:active {
-    transform: translateY(0);
+    background-color: #e85d00;
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { getEmailError, getPasswordError } from '../config/validator';
 import './Login.css';
 
@@ -19,9 +20,7 @@ const Login = () => {
         setEmailError(emailErr);
         setPasswordError(passwordErr);
 
-        if (emailErr || passwordErr) {
-            return;
-        }
+        if (emailErr || passwordErr) return;
 
         console.log("Login successful");
 
@@ -32,17 +31,17 @@ const Login = () => {
     }
 
     return (
-        <div className="main">
+        <div className="login-main">
             <div className="form">
 
                 <div className="header">
-                   <h1> Login</h1>
+                    <h1>Login</h1>
                 </div>
 
                 <form onSubmit={handleSubmit}>
 
                     <div className="input">
-                        <label>Email:</label>
+                        <label>Email</label>
                         <input
                             type="email"
                             placeholder="Enter your email"
@@ -56,7 +55,7 @@ const Login = () => {
                     </div>
 
                     <div className="input">
-                        <label>Password:</label>
+                        <label>Password</label>
                         <input
                             type="password"
                             placeholder="Enter your password"
@@ -75,9 +74,13 @@ const Login = () => {
 
                 </form>
 
-                <div>
-                    <p>New to INPREP-AI? <a href="/signin">sigin</a></p>
-                    <p>Home Page <a href="/">Click Here</a></p>
+                <div className="extra-links">
+                    <p>
+                        New to INPREP-AI? <Link to="/signin">Sign Up</Link>
+                    </p>
+                    <p>
+                        <Link to="/">Back to Home</Link>
+                    </p>
                 </div>
 
             </div>

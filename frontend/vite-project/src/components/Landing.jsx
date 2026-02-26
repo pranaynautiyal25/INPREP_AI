@@ -2,31 +2,37 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Landing.css'
 
-
 const Landing = () => {
     const navigate = useNavigate()
 
     return (
         <div className="landing-main">
             <div className="landing-card">
-                <h1>Welcome to INPREP-AI</h1>
+
+                <h1>Welcome to INPREP-AI 🚀</h1>
+                <p className="tagline">
+                    Your AI-powered mock interview partner
+                </p>
 
                 <div className="landing-section">
-                    <b>New to our app?</b>
-                    <br />
-                    <button onClick={() => navigate('/signin')}><b>Sign Up</b></button>
+                    <p><strong>New here?</strong></p>
+                    <button onClick={() => navigate('/signin')}>
+                        Sign Up
+                    </button>
                 </div>
 
                 <div className="landing-section">
-                    <b>Already a user?</b>
-                    <br />
-                    <button onClick={() => navigate('/login')}><b>Login</b></button>
+                    <p><strong>Already have an account?</strong></p>
+                    <button onClick={() => navigate('/login')}>
+                        Login
+                    </button>
                 </div>
 
                 <div className="landing-section">
-                    <b>Want to know about our app?</b>
-                    <br />
-                    <button onClick={() => navigate('/about')}><b>Learn More</b></button>
+                    <p><strong>Want to know more?</strong></p>
+                    <button onClick={() => navigate('/about')}>
+                        Learn More
+                    </button>
                 </div>
 
             </div>

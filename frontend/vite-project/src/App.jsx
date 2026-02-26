@@ -5,6 +5,9 @@ import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import About from './components/About'
 import Landing from './components/Landing'
+import Dsa from './components/Dsa'
+import Dev from './components/Dev'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -18,6 +21,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/about' element={<About />} />
+          <Route path='/dsa-mock' element={<Dsa/>}/>
+          <Route path='/dev-mock' element={<Dev/>}/>
         </Routes>
       </Router>
 

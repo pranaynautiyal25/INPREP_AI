@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Scheme({
+const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -13,6 +13,8 @@ const userSchema = new mongoose.Scheme({
         required: true,
         minlength: 6
     }
+    ,
+    dsahistory: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dsa' }]
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
