@@ -1,42 +1,51 @@
 import React from 'react'
-
+import './Dsa.css'
 const Dsa = () => {
     return (
-        <div className="container">
+        <div className="dsa-main">
 
+            {/* TOP SECTION - 30% */}
             <div className="top">
-                <div className="question">
-                    <p>Q: Solve the given DSA problem below</p>
+                <div className="dsa-question">
+                    <h3>Question</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Vel, adipisci sequi reprehenderit autem possimus ea rem
+                        voluptate? Aliquam, sint officia! Mollitia necessitatibus
+                        voluptatibus consequuntur nam sequi porro, doloribus nesciunt autem!
+                    </p>
                 </div>
 
-                <div className="microphone">
-                    <button className="mic-btn">
-                        <i className="fa-solid fa-microphone"></i>
-                    </button>
+                <div className="microphone-button">
+                    <button>🎤</button>
                 </div>
             </div>
 
+            {/* MIDDLE SECTION - 60% */}
             <div className="middle">
-
-                <div className="code">
-                    <textarea
-                        placeholder="Write your code here..."
-                        rows="12"
-                    ></textarea>
+                <div className="dsa-code">
+                    <textarea placeholder="Write your code here..."></textarea>
                 </div>
 
-                <div className="result">
-                    <p><strong>Score:</strong> </p>
-                    <p><strong>Code and Testing Results:</strong> </p>
-                    <p><strong>Communication:</strong> </p>
-                    <p><strong>Overall Review:</strong> </p>
+                <div className="performance-report">
+                    <h3>Performance Report</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Reprehenderit iure saepe sit non aut accusantium.
+                        Corporis quae ipsum similique!
+                    </p>
                 </div>
-
             </div>
 
+            {/* BOTTOM SECTION - 10% */}
             <div className="bottom">
-                <p className="voiceToText">Voice input will appear here...</p>
-                <button className="submit-and-analyze">Submit & Analyze</button>
+                <div className="audioToText">
+                    <p>Voice input will appear here...</p>
+                </div>
+
+                <div className="submit">
+                    <button type="submit">Submit</button>
+                </div>
             </div>
 
         </div>
