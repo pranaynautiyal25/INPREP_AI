@@ -1,21 +1,70 @@
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import './Dsa.css';
-import { FaMicrophone } from 'react-icons/fa';
+import { FaMicrophone, FaSyncAlt } from 'react-icons/fa';
 
 const Dsa = () => {
+
+
+
+    const [text, setText] = useState("");
+    const [listening, setListening] = useState(false);
+    const recognitionRef = useRef(null);
+
+    const handleMicClick = () => {
+        const SpeechRecognition =
+            window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            alert("Speech Recognition not supported in this browser");
+            return;
+        }
+
+        if (!listening) {
+            // START LISTENING
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = "en-US";
+
+            recognition.onresult = (event) => {
+                let transcript = "";
+                for (let i = 0; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                setText(transcript);
+            };
+
+            recognition.start();
+            recognitionRef.current = recognition;
+            setListening(true);
+
+        } else {
+            // STOP LISTENING
+            recognitionRef.current.stop();
+            setListening(false);
+        }
+    };
+
+
+
     return (
         <div className='dsa-main'>
 
             {/* TOP 10% */}
             <div className="dsa-top">
                 <div className="dsa-header">
-                    <h1>DSA-PREP</h1>
+                    <h1><span style={{ color: '#37fd00' }}>DSA-PREP</span></h1>
                 </div>
 
+                <span style={{ color: '#3b82f6' }}>{listening ? "Listening..." : ""}</span>
+
                 <div className="dsa-audio">
-                    <button className="mic-button" title="Start/Stop Recording">
+                    <button className="mic-button" onClick={handleMicClick}>
                         <FaMicrophone />
+                    </button>
+                    <button className='mic-button' onClick={() => setText("")}>
+                        <FaSyncAlt />
                     </button>
                 </div>
             </div>
@@ -24,46 +73,12 @@ const Dsa = () => {
             <div className="dsa-middle">
 
                 <div className="dsa-question">
-                    <h3>Question</h3>
+                    <h3><span style={{ color: '#3742e1' }}>Question</span></h3>
                     <p>
                         Write a function to find the longest increasing
-                        subsequence in an array.ghvssassSasASASADQWdssxsxsascsdadxasdxsadsa
-                        xXaxaazzzzzzzzzzzzzzzzzz
-                        assaasa
-                        asasasssssss<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        fvfv
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
-                        ccf<br></br>
-                        cdc<br></br>
-                        fcv<br></br>
-                        fvv<br></br>
+                        subsequence in an array.ghvssassSasA
+                        <br></br>SASADQWdssxsxsascsdadxasdxsadsa
+
 
                     </p>
                 </div>
@@ -78,11 +93,11 @@ const Dsa = () => {
             <div className="dsa-bottom">
 
                 <div className="audio-text">
-                    Voice transcript will appear here...
+                    {text || "Your speech will appear here..."}
                 </div>
 
                 <div className="dsa-button">
-                    <button>Submit and Evaluate</button>
+                    <button className="button">Submit and Evaluate</button>
                 </div>
 
             </div>

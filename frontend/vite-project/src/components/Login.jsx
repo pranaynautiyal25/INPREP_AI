@@ -35,7 +35,7 @@ const Login = () => {
             <div className="form">
 
                 <div className="header">
-                    <h1>Login</h1>
+                    <h1 style={{ color: "#3bf644" }}>Login</h1>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -68,8 +68,8 @@ const Login = () => {
                         {passwordError && <p className="error">{passwordError}</p>}
                     </div>
 
-                    <div className="button">
-                        <button type="submit">Sign In</button>
+                    <div className="loginButton">
+                        <button type="submit">Log In</button>
                     </div>
 
                 </form>

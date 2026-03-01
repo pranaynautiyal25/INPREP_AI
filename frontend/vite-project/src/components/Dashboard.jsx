@@ -9,11 +9,11 @@ const Dashboard = () => {
         <div className="container">
 
             <div className='top'>
-                <h1>Welcome Back 👋</h1>
+                <h1>Welcome Back <span style={{color:"#3b82f6"}}>Pranay</span></h1>
             </div>
 
             <div className='middle'>
-                <h2>Look at your previous records</h2>
+    
 
                 <div className='dsa-previous'>
                     <h3>DSA Mock History</h3>
@@ -27,15 +27,15 @@ const Dashboard = () => {
             </div>
 
             <div className='bottom'>
-                <h2>Start a new mock interview</h2>
+                
 
                 <div className="button-group">
-                    <button onClick={() => navigate('/dsa-mock')}>
-                        Start DSA Mock
+                    <button className="button" onClick={() => navigate('/dsa-mock')}>
+                        Start New DSA Mock
                     </button>
 
-                    <button onClick={() => navigate('/dev-mock')}>
-                        Start Dev Mock
+                    <button  className="button" onClick={() => navigate('/dev-mock')}>
+                        Start New Dev Mock
                     </button>
                 </div>
             </div>

@@ -7,7 +7,7 @@ const About = () => {
         <div className='main'>
             <div className='header'>
                 <div className='about-card'>
-                    <h1>About INPREP-AI</h1>
+                    <h1>About<span style={{ margin: "2%", color: "#0062ff" }}>INPREP-AI</span></h1>
 
                     <p>
                         INPREP-AI is an innovative platform designed to help

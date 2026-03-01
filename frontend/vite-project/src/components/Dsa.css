@@ -1,31 +1,21 @@
-/* Custom Scrollbar Styles */
-/* For Chrome, Edge, Safari */
-.dsa-question::-webkit-scrollbar,
-.dsa-code::-webkit-scrollbar,
-.dsa-code textarea::-webkit-scrollbar {
-    width: 10px;
-    background: #232323;
+.dsa-audio{
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
-
-.dsa-question::-webkit-scrollbar-thumb,
-.dsa-code::-webkit-scrollbar-thumb,
-.dsa-code textarea::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 8px;
-}
-
-.dsa-question::-webkit-scrollbar-thumb:hover,
-.dsa-code::-webkit-scrollbar-thumb:hover,
-.dsa-code textarea::-webkit-scrollbar-thumb:hover {
-    background: #888;
-}
-
-/* For Firefox */
-.dsa-question,
-.dsa-code,
-.dsa-code textarea {
+.dsa-question {
     scrollbar-width: thin;
     scrollbar-color: #555 #232323;
+}
+
+.dsa-code {
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #000000;
+}
+
+.dsa-code textarea {
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #000000;
 }
 
 /* Main container */
@@ -33,9 +23,10 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #0f0f0f;
+    background-color: #000000;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
 /* ================= TOP (10%) ================= */
@@ -45,8 +36,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 30px;
-    background-color: #1c1c1c;
-    border-bottom: 1px solid #333;
+    background-color: #202020;
+    border: 10px solid #000000;
+    border-radius: 20px;
 }
 
 .dsa-header h1 {
@@ -55,23 +47,28 @@
 
 /* Audio Button (Meeting Style) */
 .mic-button {
-    width: 64px;
-    height: 64px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     border: none;
-    background-color: #ff3b30;
+    background-color: #000000;
     color: white;
     font-size: 32px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
 .mic-button:hover {
-    background-color: #ff5e57;
+    background-color: #484747;
     transform: scale(1.05);
+}
+
+.mic-button:active {
+    background-color: #ffffff;
+    transform: scale(0.95);
 }
 
 /* ================= MIDDLE (80%) ================= */
@@ -84,10 +81,13 @@
 .dsa-question {
     width: 50%;
     padding: 20px 28px 20px 20px;
-    border-right: 1px solid #333;
+    border: 1px solid #333;
     overflow-y: auto;
     margin-bottom: 8px;
     box-sizing: border-box;
+    background-color: #0e0e0e;
+    border-radius: 20px;
+    border: 10px solid #000000;
 }
 
 /* Code Section */
@@ -124,6 +124,9 @@
     padding: 0 20px;
     border-top: 1px solid #333;
     background-color: #1c1c1c;
+    border: #000000 10px solid;
+    border-radius: 20px;
+
 }
 
 /* 80% audio text */
@@ -131,11 +134,12 @@
     width: 80%;
     color: #bbbbbb;
     overflow-x: auto;
+    font-size: 10px;
 }
 
 /* 20% button */
 .dsa-button {
-    width: 20%;
+    width: 40%;
     display: flex;
     justify-content: flex-end;
 }
@@ -144,12 +148,17 @@
     padding: 10px 18px;
     border: none;
     border-radius: 8px;
-    background-color: #ff6b00;
+    background-color: #1900ff;
     color: white;
     font-weight: bold;
     cursor: pointer;
+
 }
 
 .dsa-button button:hover {
     background-color: #e85d00;
+}
+
+.dsa-button button:active {
+    background-color: #ff1100;
 }

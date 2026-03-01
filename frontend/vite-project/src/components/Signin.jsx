@@ -41,7 +41,7 @@ const Signin = () => {
             <div className="form">
 
                 <div className="header">
-                    <h1>Create an Account</h1>
+                    <h1 style={{color:"#3bf644"}}>Create an Account</h1>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -88,8 +88,8 @@ const Signin = () => {
                         {confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
                     </div>
 
-                    <div className="button">
-                        <button type="submit">Sign Up</button>
+                    <div className="signinButton">
+                        <button className="button" type="submit">Sign Up</button>
                     </div>
 
                 </form>

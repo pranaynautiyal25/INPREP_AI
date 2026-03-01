@@ -1,7 +1,7 @@
 /* Main background */
 .landing-main {
     min-height: 100vh;
-    background-color: #0f0f0f;
+    background-color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,13 +10,13 @@
 
 /* Card */
 .landing-card {
-    background-color: #1c1c1c;
+    background-color: #202020;
     padding: 40px;
     border-radius: 12px;
     width: 400px;
     text-align: center;
     color: white;
-    border: 1px solid #333;
+    border: 1px solid #000000;
 }
 
 /* Heading */
@@ -38,18 +38,22 @@
 }
 
 /* Buttons */
-.landing-section button {
+.landing-section .button {
     margin-top: 8px;
     padding: 10px 18px;
     border: none;
     border-radius: 8px;
-    background-color: #ff6b00;
+    background-color: #000000;
     color: white;
     font-weight: bold;
     cursor: pointer;
     width: 100%;
 }
 
-.landing-section button:hover {
+.landing-section .button:hover {
     background-color: #e85d00;
+}
+
+.landing-section .button:active {
+    background-color: #ff1100;
 }
