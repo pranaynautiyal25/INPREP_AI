@@ -8,26 +8,35 @@ import Landing from './components/Landing'
 import Dsa from './components/Dsa'
 import Dev from './components/Dev'
 
+import { AuthProvider } from './Context/AuthContext'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
 
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route path='/signin' element={<Signin />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/dsa-mock' element={<Dsa/>}/>
-          <Route path='/dev-mock' element={<Dev/>}/>
-        </Routes>
-      </Router>
-
-    </div>
+    <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Landing />} />
+            <Route path='/signin' element={<Signin />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/dashboard' element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path='/about' element={<About />} />
+            <Route path='/dsa-mock' element={<ProtectedRoute>
+              <Dsa />
+            </ProtectedRoute>} />
+            <Route path='/dev-mock' element={<ProtectedRoute>
+              <Dev />
+            </ProtectedRoute>} />
+          </Routes>
+        </Router>
+    </AuthProvider>
   )
 }
 
-export default App
+export default App;

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getEmailError, getPasswordError, getConfirmPasswordError } from '../config/validator';
 import './Signin.css';
 
 const Signin = () => {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,12 +30,9 @@ const Signin = () => {
 
         console.log("Form submitted successfully");
 
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-        setEmailError('');
-        setPasswordError('');
-        setConfirmPasswordError('');
+        navigate("/login");
+
+
     }
 
     return (
@@ -41,7 +40,7 @@ const Signin = () => {
             <div className="form">
 
                 <div className="header">
-                    <h1 style={{color:"#3bf644"}}>Create an Account</h1>
+                    <h1 style={{ color: "#3bf644" }}>Create an Account</h1>
                 </div>
 
                 <form onSubmit={handleSubmit}>

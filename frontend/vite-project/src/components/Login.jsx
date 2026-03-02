@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { getEmailError, getPasswordError } from '../config/validator';
 import './Login.css';
+import { useAuth } from '../Context/AuthContext';
 
 const Login = () => {
+    const navigate = useNavigate();
+    const { login, user } = useAuth();
+
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,7 +15,9 @@ const Login = () => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    const handleSubmit = (e) => {
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const emailErr = getEmailError(email);
@@ -22,12 +28,12 @@ const Login = () => {
 
         if (emailErr || passwordErr) return;
 
-        console.log("Login successful");
 
-        setEmail('');
-        setPassword('');
-        setEmailError('');
-        setPasswordError('');
+        //backend connection for login
+
+        login({ email });
+        navigate('/dashboard');
+
     }
 
     return (
