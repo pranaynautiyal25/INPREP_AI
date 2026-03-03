@@ -1,20 +1,21 @@
 /* Main Container */
 .container {
-    min-height: 100vh;
     background-color: #000000;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
 /* Top Section */
 .top {
     text-align: center;
-    margin-bottom: 30px;
     background-color: #000000;
-    padding: 20px;
     border-radius: 60px;
     margin-bottom: 5%;
-    margin-top:5%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .top h1 {
@@ -23,10 +24,10 @@
 
 /* Middle Section */
 .middle {
-    margin-bottom: 10%;
-    padding:20px;
+    margin-bottom: 5%;
+    padding: 20px;
     background-color: #222121;
-    border-radius:50px;
+    border-radius: 50px;
 }
 
 .middle h2 {
@@ -34,12 +35,19 @@
 }
 
 /* Previous Record Boxes */
-.dsa-previous,
+
+.dsa-previous {
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 40px;
+    border: 1px solid #333;
+    margin-bottom: 10px;
+}
+
 .dev-previous {
     background-color: #000000;
     padding: 20px;
     border-radius: 40px;
-    margin-bottom: 20px;
     border: 1px solid #333;
 }
 
@@ -54,9 +62,6 @@
     text-align: center;
 }
 
-.bottom h2 {
-    margin-bottom: 20px;
-}
 
 /* Button Group */
 .button-group {
@@ -83,4 +88,16 @@
 
 .button:active {
     background-color: #ff0000;
+}
+
+.buttonLogout {
+    background-color: #ffffff;
+    border-radius: 80px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #333;
+    padding: 10px;
+    height:50px;
+    width:50px;
 }

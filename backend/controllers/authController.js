@@ -29,13 +29,13 @@ async function login(req, res) {
     }
 }
 
-async function signin(req, res) {
+async function signup(req, res) {
     const { email, password } = req.body;
 
     const findUser = await User.findOne({ email });
 
     if (findUser) {
-        res.status(400).json({
+        return res.status(400).json({
             message: "User already exists"
         })
     }
@@ -51,8 +51,8 @@ async function signin(req, res) {
         })
 
         await newUser.save();
-        res.status(200).json({
-            message: "signin successful"
+        return res.status(201).json({
+            message: "signup successful"
         })
     }
 
@@ -61,5 +61,5 @@ async function signin(req, res) {
 
 module.exports = {
     login,
-    signin
+    signup
 }

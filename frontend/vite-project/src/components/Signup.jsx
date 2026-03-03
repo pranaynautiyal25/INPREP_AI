@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getEmailError, getPasswordError, getConfirmPasswordError } from '../config/validator';
-import './Signin.css';
+import './Signup.css';
+import axios from '../config/axios.js'
 
-const Signin = () => {
+const Signup = () => {
 
     const navigate = useNavigate();
 
@@ -15,7 +16,9 @@ const Signin = () => {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-    const handleSubmit = (e) => {
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const emailErr = getEmailError(email);
@@ -28,9 +31,19 @@ const Signin = () => {
 
         if (emailErr || passwordErr || confirmPasswordErr) return;
 
-        console.log("Form submitted successfully");
 
-        navigate("/login");
+        const req = {
+            email: email,
+            password: password
+        }
+        try {
+            await axios.post('/api/auth/signup', req);
+            navigate('/login');
+        }
+        catch (e) {
+            setError(e?.response?.data?.message || 'Signup failed');
+        }
+        console.log("Form submitted successfully");
 
 
     }
@@ -90,6 +103,7 @@ const Signin = () => {
                     <div className="signinButton">
                         <button className="button" type="submit">Sign Up</button>
                     </div>
+                    {error && <p className="error">{error}</p>}
 
                 </form>
 
@@ -107,4 +121,4 @@ const Signin = () => {
     )
 }
 
-export default Signin;
+export default Signup;

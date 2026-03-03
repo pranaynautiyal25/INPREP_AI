@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import Signin from './components/Signin'
+import Signup from './components/Signup'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import About from './components/About'
@@ -19,7 +19,7 @@ function App() {
         <Router>
           <Routes>
             <Route path='/' element={<Landing />} />
-            <Route path='/signin' element={<Signin />} />
+            <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
             <Route path='/dashboard' element={
               <ProtectedRoute>

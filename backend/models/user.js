@@ -14,8 +14,9 @@ const userSchema = new mongoose.Schema({
         minlength: 6
     }
     ,
-    dsahistory: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dsa' }]
+    dsaHistory: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dsa' }]
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
+
 module.exports = User;

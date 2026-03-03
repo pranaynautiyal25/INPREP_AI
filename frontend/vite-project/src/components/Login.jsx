@@ -3,6 +3,7 @@ import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { getEmailError, getPasswordError } from '../config/validator';
 import './Login.css';
 import { useAuth } from '../Context/AuthContext';
+import axios from '../config/axios'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,6 +15,14 @@ const Login = () => {
 
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+
+
+    const [error, setError] = useState('')
+    // If already authenticated, redirect to dashboard
+    if (user) {
+        return <Navigate to="/dashboard" replace />;
+    }
+
 
 
 
@@ -30,22 +39,29 @@ const Login = () => {
 
 
         //backend connection for login
+        try {
+            setError('');
+            await axios.post('/api/auth/login', { email, password });
+            const userName = email.split('@')[0];
+            login({ UserEmail: email, UserName: userName });
+            navigate('/dashboard');
 
-        login({ email });
-        navigate('/dashboard');
+        }
+        catch (e) {
+            setError(e?.response?.data?.message || 'Login failed');
+        }
+
+
 
     }
 
     return (
         <div className="login-main">
             <div className="form">
-
                 <div className="header">
                     <h1 style={{ color: "#3bf644" }}>Login</h1>
                 </div>
-
                 <form onSubmit={handleSubmit}>
-
                     <div className="input">
                         <label>Email</label>
                         <input
@@ -59,7 +75,6 @@ const Login = () => {
                         />
                         {emailError && <p className="error">{emailError}</p>}
                     </div>
-
                     <div className="input">
                         <label>Password</label>
                         <input
@@ -73,22 +88,19 @@ const Login = () => {
                         />
                         {passwordError && <p className="error">{passwordError}</p>}
                     </div>
-
                     <div className="loginButton">
                         <button type="submit">Log In</button>
                     </div>
-
+                    {error && <p className="error">{error}</p>}
                 </form>
-
                 <div className="extra-links">
                     <p>
-                        New to INPREP-AI? <Link to="/signin">Sign Up</Link>
+                        New to INPREP-AI? <Link to="/signup">Sign Up</Link>
                     </p>
                     <p>
                         <Link to="/">Back to Home</Link>
                     </p>
                 </div>
-
             </div>
         </div>
     )

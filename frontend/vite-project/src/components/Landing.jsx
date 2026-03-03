@@ -15,7 +15,7 @@ const Landing = () => {
                 </p>
 
                 <div className="landing-section">
-                    <button className="button" onClick={() => navigate('/signin')}>
+                    <button className="button" onClick={() => navigate('/signup')}>
                         New here? <span style={{margin:"2%" ,color:"#00ff0d"}}>Sign Up</span>
                     </button>
                 </div>

@@ -1,14 +1,17 @@
 
 import React, { useState, useRef } from 'react';
 import './Dsa.css';
-import { FaMicrophone, FaSyncAlt } from 'react-icons/fa';
+import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Dsa = () => {
+    const navigate = useNavigate();
 
 
 
     const [text, setText] = useState("");
     const [listening, setListening] = useState(false);
+    const [start, setStart] = useState(false)
     const recognitionRef = useRef(null);
 
     const handleMicClick = () => {
@@ -47,13 +50,18 @@ const Dsa = () => {
     };
 
 
-
+    const handleStart = () => {
+        setStart(true);
+    }
     return (
         <div className='dsa-main'>
 
             {/* TOP 10% */}
             <div className="dsa-top">
                 <div className="dsa-header">
+                    <button className="back-button" onClick={() => navigate('/dashboard')}>
+                        <FaArrowLeft />
+                    </button>
                     <h1><span style={{ color: '#37fd00' }}>DSA-PREP</span></h1>
                 </div>
 
@@ -65,6 +73,9 @@ const Dsa = () => {
                     </button>
                     <button className='mic-button' onClick={() => setText("")}>
                         <FaSyncAlt />
+                    </button>
+                    <button className="mic-button" onClick={handleStart}>
+                        {start ? <FaSpinner className="spin-icon" /> : <FaPlay />}
                     </button>
                 </div>
             </div>
