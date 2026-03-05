@@ -8,6 +8,7 @@ import Landing from './components/Landing'
 import Dsa from './components/Dsa'
 import Dev from './components/Dev'
 
+
 import { AuthProvider } from './Context/AuthContext'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -16,25 +17,29 @@ function App() {
 
   return (
     <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path='/' element={<Landing />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/dashboard' element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path='/about' element={<About />} />
-            <Route path='/dsa-mock' element={<ProtectedRoute>
-              <Dsa />
-            </ProtectedRoute>} />
-            <Route path='/dev-mock' element={<ProtectedRoute>
-              <Dev />
-            </ProtectedRoute>} />
-          </Routes>
-        </Router>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Landing />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/dashboard' element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+          <Route path='/about' element={<About />} />
+          <Route path='/dsa-mock' element={<ProtectedRoute>
+            <Dsa />
+          </ProtectedRoute>} />
+          <Route path='/dev-mock' element={<ProtectedRoute>
+            <Dev />
+          </ProtectedRoute>} />
+
+          <Route path='/dsa-history/:id' element={<ProtectedRoute>
+            
+          </ProtectedRoute>} />
+        </Routes>
+      </Router>
     </AuthProvider>
   )
 }

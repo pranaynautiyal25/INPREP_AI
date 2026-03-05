@@ -12,7 +12,6 @@
     background-color: #000000;
     border-radius: 60px;
     margin-bottom: 5%;
-    margin-top: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,6 +97,55 @@
     font-weight: bold;
     border: 1px solid #333;
     padding: 10px;
-    height:50px;
-    width:50px;
+    height: 50px;
+    width: 50px;
+}
+
+
+
+
+.dsa-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.dsa-cards {
+    display: flex;
+    gap: 15px;
+}
+
+.dsa-slider button {
+    height: 40px;
+    width: 40px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.dir-button {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    background-color: #393939;
+    color: rgb(0, 0, 0);
+    font-size: 32px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.dir-button:hover {
+    background-color: #484747;
+    transform: scale(1.05);
+}
+
+.dir-button:active {
+    background-color: #ffffff;
+    transform: scale(0.95);
 }

@@ -1,0 +1,39 @@
+.dsa-card {
+    width: 20%;
+    min-height: 120px;
+    background-color: #1e1e1e;
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dsa-card:hover {
+    transform: translateY(-5px);
+}
+
+.dsa-card .top {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    padding:5px
+}
+
+.dsa-card .middle {
+    font-size: 14px;
+    color: #bfbfbf;
+    background-color: black;
+}
+
+.dsa-card a {
+    display: inline-block;
+    margin-top: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    color: #3b82f6;
+}
+
+.dsa-card a:hover {
+    text-decoration: underline;
+}
+
