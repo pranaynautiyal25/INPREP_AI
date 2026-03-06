@@ -14,7 +14,7 @@ const DsaHistory = ({ id, testNo, date }) => {
                 Date: {date}
                 <br />
 
-                <Link to={`/dsa-history/${id}`}>
+                <Link to={`/mock-dsa/${id}`}>
                     Performance Details
                 </Link>
             </div>

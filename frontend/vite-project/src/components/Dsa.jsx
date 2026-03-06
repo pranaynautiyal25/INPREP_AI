@@ -92,6 +92,10 @@ const Dsa = () => {
 
 
                     </p>
+                    <h3><span style={{ color: '#3742e1' }}>Constraint</span></h3>
+                    <p>
+                        n if from 1 to 10^7 and t will be not more than 10^5
+                    </p>
                 </div>
 
                 <div className="dsa-code">
