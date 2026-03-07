@@ -1,28 +1,8 @@
-const express=require('express');
+const express = require('express');
+const { saveDsa, findDsa, retestDsa } = require('../controllers/dsaController');
+const route = express.Router();
 
-const route=express.Router();
+route.post('/saveDsa', saveDsa);
+route.post('/findDsa', findDsa);
 
-route.post('/historyDsa',()=>{
-    res.send('dsa history');
-})
-
-route.post('/dsa/:id',()=>{
-    res.send('particular');
-})
-
-route.post('/createDsa',()=>{
-    res.send('dsa exam created');
-})
-
-
-route.post('evaluateDsa',()=>{
-    res.send('evaluate');
-})
-
-route.post('/saveDsa',()=>{
-    res.send('saved');
-})
-
-
-
-route.post()
+module.exports = route;

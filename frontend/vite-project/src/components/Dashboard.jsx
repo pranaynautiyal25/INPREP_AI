@@ -4,11 +4,14 @@ import { useAuth } from '../Context/AuthContext';
 import './Dashboard.css'
 import { FaSignOutAlt } from 'react-icons/fa';
 import DsaHistory from '../components/DsaHistory';
+import axios from '../config/axios.js'
 
 const Dashboard = () => {
 
     const navigate = useNavigate();
     const { user, logout } = useAuth();
+    const {dsaList,setDsaList}=useState([]);
+    
 
     const [dsa] = useState([
         { id: 1, testNo: 1, date: "10 Mar" },

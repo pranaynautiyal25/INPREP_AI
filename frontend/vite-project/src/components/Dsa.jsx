@@ -3,18 +3,36 @@ import React, { useState, useRef } from 'react';
 import './Dsa.css';
 import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from '../config/axios';
+import { useAuth } from '../Context/AuthContext';
 
 const Dsa = () => {
+
+    const { user } = useAuth();
     const navigate = useNavigate();
 
 
 
     const [text, setText] = useState("");
     const [listening, setListening] = useState(false);
-    const [start, setStart] = useState(false)
+    const [start, setStart] = useState(false);
+
+
+    const [question, setQuestion] = useState('');
+    const [constraint, setConstraint] = useState('');
+    const [code, setCode] = useState('');
+    const [speech, setSpeech] = useState('');
+    const [codeEval, setCodeEval] = useState({});
+    const [comEval, setComEval] = useState({});
+
+
     const recognitionRef = useRef(null);
 
     const handleMicClick = () => {
+        if (start === false) {
+            window.alert('start the test first');
+            return;
+        }
         const SpeechRecognition =
             window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -51,8 +69,60 @@ const Dsa = () => {
 
 
     const handleStart = () => {
+        //ai connection
+        const generatedQuestion = 'gasgd sjhbWEQWWGHGEV WWSJHSWA HJJHS k wqsjb jqws jhiswwkh sbwkjshqwkjhsqk hbkjhsqasb';
+        const generatedConstraint = 'ddqihdbhqhikhj dkjdas '
+        setQuestion(generatedQuestion);
+        setConstraint(generatedConstraint);
         setStart(true);
     }
+
+    const handleEvaluation = async () => {
+        if (start === false) {
+            window.alert('start the test first');
+            return;
+        }
+
+        const spokenApproach = text.trim();
+        const questionText = question.trim();
+        const codeText = code.trim();
+        const constraintText = constraint.trim();
+
+        setSpeech(spokenApproach);
+
+        if (!questionText || !constraintText || !spokenApproach || !codeText) {
+            return window.alert('incomplete process');
+        }
+
+        //ai integration here 
+
+        const emailId = user.UserEmail;
+
+        try {
+            const payload = {
+                email: emailId,
+                question: questionText,
+                constraint: constraintText,
+                yourApproach: spokenApproach,
+                betterApproach: 'Pending AI evaluation',
+                codeScore: 0,
+                explainationScore: 'Pending',
+                codeReview: 'Pending',
+                improvementScope: 'Pending'
+            };
+
+            await axios.post('/api/dsa/saveDsa', payload);
+            window.alert('Saved successfully');
+            navigate('/dashboard');
+        } catch (error) {
+            window.alert(error?.response?.data?.message || 'Failed to save exam');
+        }
+
+
+
+
+    }
+
     return (
         <div className='dsa-main'>
 
@@ -86,20 +156,23 @@ const Dsa = () => {
                 <div className="dsa-question">
                     <h3><span style={{ color: '#3742e1' }}>Question</span></h3>
                     <p>
-                        Write a function to find the longest increasing
-                        subsequence in an array.ghvssassSasA
-                        <br></br>SASADQWdssxsxsascsdadxasdxsadsa
+                        {question || "Question will appear here"}
 
 
                     </p>
                     <h3><span style={{ color: '#3742e1' }}>Constraint</span></h3>
                     <p>
-                        n if from 1 to 10^7 and t will be not more than 10^5
+                        {constraint || "constraint will appear here"}
                     </p>
                 </div>
 
                 <div className="dsa-code">
-                    <textarea placeholder='Type Your Code Here'></textarea>
+                    <textarea
+                        placeholder="Type Your Code Here"
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                    ></textarea>
+
                 </div>
 
             </div>
@@ -112,11 +185,18 @@ const Dsa = () => {
                 </div>
 
                 <div className="dsa-button">
-                    <button className="button">Submit and Evaluate</button>
+                    <button className="button" onClick={handleEvaluation}>Submit and Evaluate</button>
                 </div>
 
             </div>
 
+            <div style={{ color: "white" }}>
+                Testing <br></br>
+                Question : {question} <br></br>
+                Constraint: {constraint} <br></br>
+                Code: {code} <br></br>
+                Speech: {speech}<br></br>
+            </div>
         </div>
     )
 }

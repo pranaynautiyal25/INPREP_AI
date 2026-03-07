@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const Dsa = require('../models/dsa');
+
 const bcrypt = require('bcryptjs');
 
 
@@ -22,7 +24,8 @@ async function login(req, res) {
 
         else {
             return res.status(200).json({
-                message: "Login successful"
+                message: "Login successful",
+                id: findUser._id
             })
         }
 
@@ -58,8 +61,29 @@ async function signup(req, res) {
 
 }
 
+const historyDsa = async (req, res) => {
+    const { email } = req.body;
+
+    const findUser = await User.findOne({ email });
+    const his = findUser.dsaHistory;
+    let arr = [];
+
+    for (let i = 0; i < his.length; i++) {
+        for (let i = 0; i < his.length; i++) {
+            const dsaId = his[i].dsaModelId;
+            const x = await Dsa.findById(dsaId);
+            arr.push(x);
+        }
+    }
+
+    return res.status(200).json({
+        message: 'found',
+        payload: arr
+    })
+}
 
 module.exports = {
     login,
-    signup
+    signup,
+    historyDsa
 }
