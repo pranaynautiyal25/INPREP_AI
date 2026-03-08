@@ -29,6 +29,10 @@ const dsaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    explainationReview: {
+        type: String,
+        required: true
+    },
     improvementScope: {
         type: String,
         required: true

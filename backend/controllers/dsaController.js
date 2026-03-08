@@ -13,6 +13,7 @@ const saveDsa = async (req, res) => {
             codeScore,
             explainationScore,
             codeReview,
+            explainationReview,
             improvementScope } = req.body;
 
         if (!email) {
@@ -37,6 +38,7 @@ const saveDsa = async (req, res) => {
             codeScore,
             explainationScore,
             codeReview,
+            explainationReview,
             improvementScope
         });
 

@@ -119,9 +119,7 @@ const Dsa = () => {
                 betterApproach: evaluation.betterApproach,
                 codeScore: evaluation.codeScore,
                 explainationScore: evaluation.explanationScore, // note field name matching your schema
-                codeReview: Array.isArray(evaluation.codeReview)
-                    ? evaluation.codeReview.join('\n• ')  // join with bullet points
-                    : evaluation.codeReview,
+                codeReview: evaluation.codeReview,
                 explainationReview: evaluation.explanationReview, // make sure it's spelled correctly
                 improvementScope: evaluation.improvementScope,
             };

@@ -56,7 +56,8 @@ const MockDsa = () => {
                     <h3 style={{ color: '#fdf900' }}>CODE-REVIEW : </h3>
                     {info.codeReview}
                     <h3 style={{ color: '#fdf900' }}>EXPLAINATION & COMMUNICATION-REVIEW : </h3>
-                    {info.explainationReview || 'Pending'}
+                    {info.explainationReview
+                        || 'Pending'}
                     <h3 style={{ color: '#fdf900' }}>IMPROVEMENT-SCOPE : </h3>
                     {info.improvementScope}
                 </div>

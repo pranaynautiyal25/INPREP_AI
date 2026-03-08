@@ -128,40 +128,12 @@ EVALUATION INSTRUCTIONS
 
 Analyze the solution carefully and evaluate:
 
-1. **Algorithm & Approach**
-   - Identify the algorithm or data structure used.
-   - Determine whether the chosen approach is optimal or suboptimal.
-   - Check if the approach actually solves the problem.
-
-2. **Correctness**
-   - Determine if the code logically solves the problem.
-   - Check potential bugs, logical mistakes, or missing conditions.
-
-3. **Edge Cases**
-   Consider whether the code handles:
-   - Empty inputs
-   - Minimum/maximum constraint values
-   - Duplicate values
-   - Boundary conditions
-   - Invalid or corner scenarios mentioned in constraints.
-
-4. **Time & Space Complexity**
-   - Infer the algorithm's complexity.
-   - Compare it with what would typically be expected for a medium-level interview problem.
-
-5. **Code Quality**
-   - Readability
-   - Naming conventions
-   - Structure/modularity
-   - Avoidance of unnecessary complexity.
-
-6. **Communication / Explanation**
-   Evaluate whether the candidate:
-   - Clearly explained their approach.
-   - Explained why the algorithm works.
-   - Mentioned complexity.
-   - Mentioned edge cases or trade-offs.
-   - Structured their explanation logically.
+1. Algorithm & Approach
+2. Correctness
+3. Edge Cases
+4. Time & Space Complexity
+5. Code Quality
+6. Communication / Explanation
 
 -----------------------
 OUTPUT FORMAT
@@ -174,18 +146,8 @@ Return ONLY a valid JSON object with the EXACT structure below:
   "betterApproach": "2-3 sentences describing a better or more optimal approach if applicable. If the candidate’s approach is already optimal, explain why and briefly mention alternatives.",
   "codeScore": 0.0,
   "explanationScore": 0.0,
-  "codeReview": [
-    "Bullet point describing a strength or issue in the code",
-    "Bullet point describing another strength or issue",
-    "Bullet point describing another strength or issue",
-    "Bullet point describing another strength or issue"
-  ],
-  "explanationReview": [
-    "Bullet point evaluating explanation clarity",
-    "Bullet point evaluating structure or reasoning",
-    "Bullet point evaluating discussion of complexity or edge cases",
-    "Bullet point evaluating communication quality"
-  ],
+  "codeReview": "- Point 1\\n- Point 2\\n- Point 3\\n- Point 4",
+  "explanationReview": "- Point 1\\n- Point 2\\n- Point 3\\n- Point 4",
   "improvementScope": "A short paragraph summarizing the top 2-3 areas the candidate should improve in future interviews."
 }
 
@@ -212,10 +174,11 @@ IMPORTANT RULES
 -----------------------
 
 - Output MUST be valid JSON.
+- codeReview and explanationReview MUST be single strings (NOT arrays).
+- Use bullet points separated by "\\n".
 - Do NOT include markdown formatting.
 - Do NOT include any text outside the JSON object.
-- Scores must be decimals between 0 and 10 (e.g., 7.5).
-- Reviews must contain concise bullet points.`
+- Scores must be decimals between 0 and 10 (e.g., 7.5).`
             }
         ];
 
