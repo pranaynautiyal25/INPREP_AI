@@ -68,18 +68,21 @@ const Dsa = () => {
     };
 
 
-    const handleStart = () => {
+    const handleStart = async () => {
         //ai connection
-        const generatedQuestion = 'gasgd sjhbWEQWWGHGEV WWSJHSWA HJJHS k wqsjb jqws jhiswwkh sbwkjshqwkjhsqk hbkjhsqasb';
-        const generatedConstraint = 'ddqihdbhqhikhj dkjdas '
-        setQuestion(generatedQuestion);
-        setConstraint(generatedConstraint);
-        setStart(true);
+        try {
+            const res = await axios.post('/api/ai/generate-question');
+            setQuestion(res.data.question);
+            setConstraint(res.data.constraint);
+            setStart(true);
+        } catch (error) {
+            alert('Failed to generate question. Please try again.');
+        }
     }
 
     const handleEvaluation = async () => {
-        if (start === false) {
-            window.alert('start the test first');
+        if (!start) {
+            alert('Start the test first');
             return;
         }
 
@@ -88,34 +91,46 @@ const Dsa = () => {
         const codeText = code.trim();
         const constraintText = constraint.trim();
 
-        setSpeech(spokenApproach);
-
         if (!questionText || !constraintText || !spokenApproach || !codeText) {
-            return window.alert('incomplete process');
+            return alert('Incomplete process');
         }
 
-        //ai integration here 
-
-        const emailId = user.UserEmail;
+        setSpeech(spokenApproach);
 
         try {
-            const payload = {
-                email: emailId,
+            // 1. Get AI evaluation
+            const evalRes = await axios.post('/api/ai/evaluate', {
                 question: questionText,
                 constraint: constraintText,
-                yourApproach: spokenApproach,
-                betterApproach: 'Pending AI evaluation',
-                codeScore: 0,
-                explainationScore: 'Pending',
-                codeReview: 'Pending',
-                improvementScope: 'Pending'
+                code: codeText,
+                explanation: spokenApproach,
+            });
+
+            console.log(evalRes);
+
+            const evaluation = evalRes.data; // contains all fields
+
+            // 2. Save to database
+            const payload = {
+                email: user.UserEmail,
+                question: questionText,
+                constraint: constraintText,
+                yourApproach: evaluation.yourApproach,
+                betterApproach: evaluation.betterApproach,
+                codeScore: evaluation.codeScore,
+                explainationScore: evaluation.explanationScore, // note field name matching your schema
+                codeReview: Array.isArray(evaluation.codeReview)
+                    ? evaluation.codeReview.join('\n• ')  // join with bullet points
+                    : evaluation.codeReview,
+                explainationReview: evaluation.explanationReview, // make sure it's spelled correctly
+                improvementScope: evaluation.improvementScope,
             };
 
             await axios.post('/api/dsa/saveDsa', payload);
-            window.alert('Saved successfully');
+            alert('Saved successfully');
             navigate('/dashboard');
         } catch (error) {
-            window.alert(error?.response?.data?.message || 'Failed to save exam');
+            alert(error?.response?.data?.message || 'Evaluation failed');
         }
 
 

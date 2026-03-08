@@ -2,19 +2,24 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './DsaHistory.css'
 
-const DsaHistory = ({ id, testNo, date }) => {
+const DsaHistory = ({ id, testNo, date, payload }) => {
+    function formatDate(isoDate) {
+        const d = new Date(isoDate);
+        return Number.isNaN(d.getTime()) ? 'N/A' : d.toLocaleString();
+    }
     return (
         <div className='dsa-card'>
 
-            <div className='top'>
+            <div className='cardtop'>
                 DSA Mock {testNo}
             </div>
 
-            <div className='middle'>
-                Date: {date}
+            <div className='cardmiddle'>
+                Date: {formatDate(date)}
                 <br />
 
-                <Link to={`/mock-dsa/${id}`}>
+                <Link to={`/mock-dsa/${id}`}
+                    state={{ payload }}>
                     Performance Details
                 </Link>
             </div>

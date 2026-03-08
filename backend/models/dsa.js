@@ -5,32 +5,32 @@ const dsaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    constraint:{
+    constraint: {
         type: String,
         required: true
     },
-    yourApproach:{
-        type:String,
+    yourApproach: {
+        type: String,
         required: true
     },
-    betterApproach:{
-        type:String,
+    betterApproach: {
+        type: String,
         required: true
     },
-    codeScore:{
+    codeScore: {
         type: Number,
-        required:true
-    },
-    explainationScore:{
-        type:String,
         required: true
     },
-    codeReview:{
-        type:String,
+    explainationScore: {
+        type: String,
         required: true
     },
-    improvementScope:{
-        type:String,
+    codeReview: {
+        type: String,
+        required: true
+    },
+    improvementScope: {
+        type: String,
         required: true
     }
 });

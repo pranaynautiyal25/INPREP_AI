@@ -7,13 +7,13 @@ const createDsa = async (req, res) => {
 
 const saveDsa = async (req, res) => {
     try {
-        const { email, question,constraint,
-        yourApproach,
-        betterApproach,
-        codeScore,
-        explainationScore,
-        codeReview,
-        improvementScope } = req.body;
+        const { email, question, constraint,
+            yourApproach,
+            betterApproach,
+            codeScore,
+            explainationScore,
+            codeReview,
+            improvementScope } = req.body;
 
         if (!email) {
             return res.status(400).json({

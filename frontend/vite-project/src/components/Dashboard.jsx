@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../Context/AuthContext';
 import './Dashboard.css'
@@ -10,21 +10,28 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
     const { user, logout } = useAuth();
-    const {dsaList,setDsaList}=useState([]);
-    
 
-    const [dsa] = useState([
-        { id: 1, testNo: 1, date: "10 Mar" },
-        { id: 2, testNo: 2, date: "11 Mar" },
-        { id: 3, testNo: 3, date: "12 Mar" },
-        { id: 4, testNo: 4, date: "13 Mar" },
-        { id: 5, testNo: 5, date: "14 Mar" },
-        { id: 6, testNo: 6, date: "15 Mar" },
-        { id: 7, testNo: 7, date: "16 Mar" },
-        { id: 8, testNo: 8, date: "17 Mar" }
-    ]);
 
+    const [dsa, setDsa] = useState([]);
     const [traverse, setTraverse] = useState(0);
+
+    useEffect(() => {
+        const fetchDsa = async () => {
+            const email = user.UserEmail;
+            const res = await axios.post('/api/auth/historyDsa', { email });
+            const payload = Array.isArray(res.data?.payload) ? res.data.payload : [];
+
+            const uniquePayload = payload.filter((item, index, arr) => {
+                if (!item?._id) return true;
+                return arr.findIndex((x) => x?._id === item._id) === index;
+            });
+
+            setDsa(uniquePayload);
+        };
+
+        fetchDsa();
+    }, [user.UserEmail]);
+
 
     const nextDsa = () => {
         if (traverse + 4 < dsa.length) {
@@ -38,7 +45,9 @@ const Dashboard = () => {
         }
     }
 
-    const visible = dsa.slice(traverse, traverse + 4);
+    const visible = (Array.isArray(dsa) ? dsa : [])
+        .filter((item) => item && typeof item === 'object')
+        .slice(traverse, traverse + 4);
 
     return (
         <div className="container">
@@ -46,7 +55,7 @@ const Dashboard = () => {
             <div className='top'>
                 <div style={{ width: "60%", justifyItems: "right" }}>
                     <h1>
-                        Welcome Back 
+                        Welcome Back
                         <span style={{ color: "#3b82f6" }}> {user.UserName}</span>
                     </h1>
                 </div>
@@ -71,27 +80,28 @@ const Dashboard = () => {
                     ) : (
                         <div className="dsa-slider">
 
-                            <button className ='dir-button' onClick={prevDsa}>⬅</button>
+                            <button className='dir-button' onClick={prevDsa}>⬅</button>
 
                             <div className="dsa-cards">
-                                {visible.map((item) => (
+                                {visible.map((item, index) => (
                                     <DsaHistory
-                                        key={item.id}
-                                        id={item.id}
-                                        testNo={item.testNo}
-                                        date={item.date}
+                                        key={`${item?._id || 'no-id'}-${traverse + index}`}
+                                        id={item?._id}
+                                        testNo={traverse + index + 1}
+                                        date={item?.createdAt}
+                                        payload={item}
                                     />
                                 ))}
                             </div>
 
-                            <button className ='dir-button' onClick={nextDsa}>➡</button>
+                            <button className='dir-button' onClick={nextDsa}>➡</button>
 
                         </div>
                     )}
 
                 </div>
 
-                
+
                 <div className='dev-previous'>
                     <h3>Development Mock History</h3>
                     <p>No previous Dev mock records yet.</p>
