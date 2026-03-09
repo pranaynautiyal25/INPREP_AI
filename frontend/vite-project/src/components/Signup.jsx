@@ -29,7 +29,10 @@ const Signup = () => {
         setPasswordError(passwordErr);
         setConfirmPasswordError(confirmPasswordErr);
 
-        if (emailErr || passwordErr || confirmPasswordErr) return;
+        if (emailErr || passwordErr || confirmPasswordErr){ 
+            alert(emailErr+ " "+passwordErr+" "+confirmPasswordErr);
+            return;
+        }
 
 
         const req = {
@@ -49,75 +52,92 @@ const Signup = () => {
     }
 
     return (
-        <div className="signin-main">
-            <div className="form">
+        <div className="login-main">
 
-                <div className="header">
-                    <h1 style={{ color: "#3bf644" }}>Create an Account</h1>
+    <div className="signup-header">
+        <b>
+            <p style={{ color: "#1e00ff" }}>
+
+                New To INPREP-AI ? Join INPREP-AI and start practicing AI-powered mock interviews...
+            </p>
+        </b>
+    </div>
+
+    <div>
+        <div className="form">
+
+            <form onSubmit={handleSubmit}>
+
+                <div className="login-input">
+                    <b>
+                        <p style={{ fontSize: "13px", paddingRight: "40px" }}>Email :</p>
+                    </b>
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setEmailError('');
+                        }}
+                    />
+                </div>
+                
+
+                <div className="login-input">
+                    <b>
+                        <p style={{ fontSize: "13px", paddingRight: "15px" }}>Password :</p>
+                    </b>
+                    <input
+                        type="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setPasswordError('');
+                        }}
+                    />
+                </div>
+                
+
+                <div className="login-input">
+                    <b>
+                        <p style={{ fontSize: "13px", paddingRight: "18px" }}>Confirm It:</p>
+                    </b>
+                    <input
+                        type="password"
+                        placeholder="Confirm your password"
+                        value={confirmpassword}
+                        onChange={(e) => {
+                            setConfirmPassword(e.target.value);
+                            setConfirmPasswordError('');
+                        }}
+                    />
                 </div>
 
-                <form onSubmit={handleSubmit}>
 
-                    <div className="input">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                setEmailError('');
-                            }}
-                        />
-                        {emailError && <p className="error">{emailError}</p>}
-                    </div>
-
-                    <div className="input">
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                setPasswordError('');
-                            }}
-                        />
-                        {passwordError && <p className="error">{passwordError}</p>}
-                    </div>
-
-                    <div className="input">
-                        <label>Confirm Password</label>
-                        <input
-                            type="password"
-                            placeholder="Confirm your password"
-                            value={confirmpassword}
-                            onChange={(e) => {
-                                setConfirmPassword(e.target.value);
-                                setConfirmPasswordError('');
-                            }}
-                        />
-                        {confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
-                    </div>
-
-                    <div className="signinButton">
-                        <button className="button" type="submit">Sign Up</button>
-                    </div>
-                    {error && <p className="error">{error}</p>}
-
-                </form>
-
-                <div className="extra-links">
-                    <p>
-                        Already have an account? <Link to="/login">Login</Link>
-                    </p>
-                    <p>
-                        <Link to="/">Back to Home</Link>
-                    </p>
+                <div className="loginButton">
+                    <button type="submit">Sign Up</button>
                 </div>
 
-            </div>
+                {error && <p className="error">{error}</p>}
+
+            </form>
+
         </div>
+
+        <div className="extra-links">
+            <p>
+                Already have an account? <Link to="/login">Login</Link>
+            </p>
+            <p>
+                <Link to="/">Back to Home</Link>
+            </p>
+        </div>
+
+    </div>
+
+</div>
     )
 }
 

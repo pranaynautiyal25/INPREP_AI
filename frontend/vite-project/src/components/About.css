@@ -1,7 +1,7 @@
 /* Main background */
 .main {
     min-height: 100vh;
-    background-color: #0f0f0f;
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,12 +18,12 @@
 
 /* Card */
 .about-card {
-    background-color: #1c1c1c;
+    background-color: #000000;
     padding: 40px;
     border-radius: 12px;
     width: 600px;
     max-width: 95%;
-    color: white;
+    color: rgb(255, 255, 255);
     border: 1px solid #333;
     text-align: center;
 }
@@ -31,7 +31,7 @@
 /* Heading */
 .about-card h1 {
     margin-bottom: 20px;
-    font-size: 26px;
+    font-size:30px;
 }
 
 /* Paragraphs */
@@ -47,9 +47,10 @@
 }
 
 .home-link a {
-    color: #00b894;
+    color: #9000ff;
     text-decoration: none;
     font-weight: bold;
+    font-size: 20px;
 }
 
 .home-link a:hover {

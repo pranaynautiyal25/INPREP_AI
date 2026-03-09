@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
+    width: 80%;
+    gap: 50px;
+    padding-left: 10%
 }
 
 /* Form Card */
@@ -19,36 +22,44 @@
 }
 
 /* Header */
-.header {
-    text-align: center;
-    margin-bottom: 20px;
+.login-header {
+    width: 25vh;
+    height: 25vh;
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding-bottom: 10vh;
+    padding-left: 10vh;
+    padding-right: 10vh;
+    padding-top: 10vh;
+    line-height: 1.6;
 }
 
-.header h1 {
+.login-header p {
     font-size: 24px;
 }
 
 /* Input Sections */
-.input {
+.login-input {
     margin-bottom: 18px;
     display: flex;
-    flex-direction: column;
 }
 
-.input label {
+.login-input label {
     margin-bottom: 6px;
     font-size: 14px;
 }
 
-.input input {
-    padding: 10px;
+.login-input input {
+
     border-radius: 6px;
-    border: 1px solid #000000;
+    border: 0px solid #000000;
     background-color: #000000;
     color: white;
+    height: 35px;
+    width: 250px;
 }
 
-.input input:focus {
+.login-input input:focus {
     outline: none;
     border: 1px solid #002fff;
 }
@@ -66,7 +77,7 @@
 }
 
 .loginButton button {
-    width: 100%;
+    width: 97%;
     padding: 10px;
     border-radius: 8px;
     border: none;
@@ -89,6 +100,10 @@
     margin-top: 20px;
     font-size: 14px;
     text-align: center;
+    background-color: #161616;
+    color:white;
+    padding:1px;
+    border-radius:12px;
 }
 
 .extra-links a {

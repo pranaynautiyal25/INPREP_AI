@@ -35,7 +35,10 @@ const Login = () => {
         setEmailError(emailErr);
         setPasswordError(passwordErr);
 
-        if (emailErr || passwordErr) return;
+        if (emailErr || passwordErr) {
+            alert(emailErr + " " + passwordErr);
+            return;
+        }
 
 
         //backend connection for login
@@ -56,43 +59,48 @@ const Login = () => {
     }
 
     return (
+
         <div className="login-main">
-            <div className="form">
-                <div className="header">
-                    <h1 style={{ color: "#3bf644" }}>Login</h1>
+            <div className="login-header">
+                <b><p style={{ color: "#2200ff" }}>Welcome Back User , Glad To See You Again...</p></b>
+            </div>
+
+            <div>
+                <div className="form">
+                    <form onSubmit={handleSubmit}>
+                        <div className="login-input">
+                            <b>
+                                <p style={{ fontSize: "13px", paddingRight: "40px" }}>Email  :</p></b>
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    setEmailError('');
+                                }}
+                            />
+                        </div>
+                        <div className="login-input"><b>
+                            <p style={{ fontSize: "13px", paddingRight: "15px" }}>Password  : </p>
+                        </b>
+                            <input
+                                type="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    setPasswordError('');
+                                }}
+                            />
+                        </div>
+                        <div className="loginButton">
+                            <button type="submit">Log In</button>
+                        </div>
+                        {error && <p className="error">{error}</p>}
+                    </form>
+
                 </div>
-                <form onSubmit={handleSubmit}>
-                    <div className="input">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                setEmailError('');
-                            }}
-                        />
-                        {emailError && <p className="error">{emailError}</p>}
-                    </div>
-                    <div className="input">
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                setPasswordError('');
-                            }}
-                        />
-                        {passwordError && <p className="error">{passwordError}</p>}
-                    </div>
-                    <div className="loginButton">
-                        <button type="submit">Log In</button>
-                    </div>
-                    {error && <p className="error">{error}</p>}
-                </form>
                 <div className="extra-links">
                     <p>
                         New to INPREP-AI? <Link to="/signup">Sign Up</Link>
