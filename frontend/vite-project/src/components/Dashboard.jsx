@@ -30,7 +30,7 @@ const Dashboard = () => {
         };
 
         fetchDsa();
-    }, [user.UserEmail]);
+    }, []);
 
 
     const nextDsa = () => {
@@ -53,63 +53,101 @@ const Dashboard = () => {
         <div className="container">
 
             <div className='top'>
-                <div style={{ width: "60%", justifyItems: "right" }}>
-                    <h1>
+                <div style={{ width: "100%", justifyItems: "center" }}>
+                    <h1 style={{ fontSize: "50px" }}>
                         Welcome Back
                         <span style={{ color: "#3b82f6" }}> {user.UserName}</span>
                     </h1>
                 </div>
 
-                <div style={{ paddingLeft: "30%", paddingRight: "5%" }}>
-                    <button
-                        className="buttonLogout"
-                        onClick={() => { logout(); navigate('/login'); }}
-                    >
-                        <FaSignOutAlt style={{ height: "100%", width: "100%" }} />
-                    </button>
-                </div>
+
             </div>
 
-            <div className='middle'>
+            <div className="middle">
+                <div className='middle1'>
 
-                <div className='dsa-previous'>
-                    <h3>DSA Mock History</h3>
+                    <div className='dsa-previous'>
+                        <h3>  <b>DSA Mock History</b></h3>
 
-                    {dsa.length === 0 ? (
-                        <p>No previous DSA mock records yet.</p>
-                    ) : (
-                        <div className="dsa-slider">
+                        {dsa.length === 0 ? (
+                            <p>No previous DSA mock records yet.</p>
+                        ) : (
+                            <div className="dsa-slider">
 
-                            <button className='dir-button' onClick={prevDsa}>⬅</button>
+                                <button className='dir-button' onClick={prevDsa}>⬅</button>
 
-                            <div className="dsa-cards">
-                                {visible.map((item, index) => (
-                                    <DsaHistory
-                                        key={`${item?._id || 'no-id'}-${traverse + index}`}
-                                        id={item?._id}
-                                        testNo={traverse + index + 1}
-                                        date={item?.createdAt}
-                                        payload={item}
-                                    />
-                                ))}
+                                <div className="dsa-cards">
+                                    {visible.map((item, index) => (
+                                        <DsaHistory
+                                            key={`${item?._id || 'no-id'}-${traverse + index}`}
+                                            id={item?._id}
+                                            testNo={traverse + index + 1}
+                                            date={item?.createdAt}
+                                            payload={item}
+                                        />
+                                    ))}
+                                </div>
+
+                                <button className='dir-button' onClick={nextDsa}>➡</button>
+
                             </div>
+                        )}
 
-                            <button className='dir-button' onClick={nextDsa}>➡</button>
+                    </div>
 
-                        </div>
-                    )}
+
+
+
+
+
+                    <div className='dev-previous'>
+                        <h3><b>Development Mock History</b></h3>
+                        <p>No previous Dev mock records yet.</p>
+                    </div>
 
                 </div>
 
 
-                <div className='dev-previous'>
-                    <h3>Development Mock History</h3>
-                    <p>No previous Dev mock records yet.</p>
-                </div>
+                <div className='middle2'>
 
+
+                    <div>
+                        <button
+                            className="button"
+                            onClick={() => navigate('/dsa-mock')}
+                        >
+                            Start New DSA Mock
+                        </button>
+                    </div>
+                    <div style={{ marginTop: "8%" }}>
+                        <button
+                            className="button"
+                            onClick={() => navigate('/dev-mock')}
+                        >
+                            Start New Dev Mock
+                        </button>
+
+                    </div>
+
+                    <div style={{
+                        paddingLeft: "30%", paddingRight: "5%",
+                        backgroundColor: 'black', display: 'flex', marginTop: '16px',
+                        borderRadius: '40px', height: '50px', padding: '10px', width: '27vh'
+                    }}>
+                        <button
+                            className="buttonLogout"
+                            onClick={() => { logout(); navigate('/login'); }}
+                        >
+                            <FaSignOutAlt style={{ height: "100%", width: "100%" }} />
+                        </button>
+
+                    </div>
+
+
+                </div>
             </div>
 
-            <div className='bottom'>
+            {/* <div className='bottom'>
 
                 <div className="button-group">
 
@@ -129,7 +167,7 @@ const Dashboard = () => {
 
                 </div>
 
-            </div>
+            </div> */}
 
         </div>
     )

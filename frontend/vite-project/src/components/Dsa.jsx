@@ -198,17 +198,9 @@ const Dsa = () => {
                 </div>
 
                 <div className="dsa-button">
-                    <button className="button" onClick={handleEvaluation}>Submit and Evaluate</button>
+                    <button className="" onClick={handleEvaluation}>Submit and Evaluate</button>
                 </div>
 
-            </div>
-
-            <div style={{ color: "white" }}>
-                Testing <br></br>
-                Question : {question} <br></br>
-                Constraint: {constraint} <br></br>
-                Code: {code} <br></br>
-                Speech: {speech}<br></br>
             </div>
         </div>
     )
