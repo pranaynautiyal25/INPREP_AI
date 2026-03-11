@@ -136,13 +136,22 @@ const Dsa = () => {
 
     }
 
+
+    const handleBack = () => {
+        if (start === true) {
+            window.alert('Dsa Exam Ongoing');
+            return;
+        }
+
+        navigate('/dashboard');
+    }
     return (
         <div className='dsa-main'>
 
             {/* TOP 10% */}
             <div className="dsa-top">
                 <div className="dsa-header">
-                    <button className="back-button" onClick={() => navigate('/dashboard')}>
+                    <button className="back-button" onClick={handleBack}>
                         <FaArrowLeft />
                     </button>
                     <h1><span style={{ color: '#37fd00' }}>DSA-PREP</span></h1>
