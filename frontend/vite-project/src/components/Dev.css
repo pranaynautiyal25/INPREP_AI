@@ -1,0 +1,86 @@
+.dev-main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+}
+
+.dev-header {
+    margin-top: 23vh;
+    margin-left: 35vh;
+    border-radius: 40px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: blue;
+    height: 57vh;
+    width: 50vh;
+    background-color: white;
+}
+
+
+.dev-options {
+    margin-top: 23vh;
+    margin-left: 10vh;
+    border-radius: 40px;
+    padding: 20px;
+    height: 42vh;
+    width: 50.3vh;
+    background-color: white;
+}
+
+.dev-button {
+    height: 20vh;
+    width: 24vh;
+    background-color: black;
+    color: white;
+    border-radius: 23px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.dev-button:hover {
+    background-color: orangered;
+}
+.dev-button:active{
+    background-color: red;
+}
+
+.dev-manybuttons {
+    display: flex;
+    gap: 17px;
+}
+
+.dev-back{
+    margin-top: 2vh;
+    margin-left: 10vh;
+    border-radius: 50px;
+    padding: 20px;
+    color: rgb(255, 255, 255);
+    height: 10vh;
+    width: 55.7vh;
+    background-color: rgb(0, 0, 0);
+    display:flex;
+    border: 15px solid #ffffff;
+    align-items: center;
+    font-size:larger;
+    
+}
+
+.dev-back:hover{
+    margin-top: 2vh;
+    margin-left: 10vh;
+    border-radius: 50px;
+    padding: 20px;
+    color: rgb(255, 255, 255);
+    height: 10vh;
+    width: 55.7vh;
+    background-color: rgb(58, 58, 58);
+    display:flex;
+    border: 15px solid #ffffff;
+    align-items: center;
+    font-size:larger;
+}

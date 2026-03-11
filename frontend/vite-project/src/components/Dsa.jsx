@@ -151,7 +151,7 @@ const Dsa = () => {
     return (
         <div className='dsa-main'>
 
-            {/* TOP 10% */}
+        
             <div className="dsa-top" style={{ marginBottom: '8px', borderColor: "white", backgroundColor: 'black' }}>
                 <div className="dsa-header">
                     <button className="back-button" onClick={handleBack}>
@@ -175,7 +175,7 @@ const Dsa = () => {
                 </div>
             </div>
 
-            {/* MIDDLE 80% */}
+            
             <div className="dsa-middle">
 
                 <div className="dsa-question">
@@ -202,7 +202,7 @@ const Dsa = () => {
 
             </div>
 
-            {/* BOTTOM 10% */}
+        
             <div className="dsa-bottom">
 
                 <div className="audio-text">

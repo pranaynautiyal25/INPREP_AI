@@ -7,7 +7,7 @@ import About from './components/About'
 import Landing from './components/Landing'
 import Dsa from './components/Dsa'
 import Dev from './components/Dev'
-import MockDsa from './components/MockDsa'  
+import MockDsa from './components/MockDsa'
 
 
 import { AuthProvider } from './Context/AuthContext'
@@ -37,7 +37,7 @@ function App() {
           </ProtectedRoute>} />
 
           <Route path='/mock-dsa/:id' element={<ProtectedRoute>
-            <MockDsa/>
+            <MockDsa />
           </ProtectedRoute>} />
         </Routes>
       </Router>
