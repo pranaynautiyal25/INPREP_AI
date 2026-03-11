@@ -63,11 +63,12 @@
     justify-content: flex-start;
     align-items: flex-start;
     padding: 15px;
-    background-color: #ffffff;
-    border: 10px solid #000000;
+    background-color: #000000;
+    border: 10px solid #ffffff;
     border-radius: 20px;
-    color: #000000;
+    color: #ffffff;
     overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 .mock-middle p {
@@ -82,18 +83,18 @@
     background-color: #ffffff;
     height: 60%;
     display: flex;
-    border: 10px solid #000000;
+    border: 10px solid #ffffff;
     border-radius: 20px;
     display:flex;
-
+    margin-top: 8px;
+    gap:10px;
 }
 
 .eval{
     background-color: #000000;
-    padding-left:2%;
-    height:100%;
+    padding:2%;
+    height:86%;
     width:50%;
-    border: 10px solid #ffffff;
     border-radius: 20px;
     overflow-y:auto
 }

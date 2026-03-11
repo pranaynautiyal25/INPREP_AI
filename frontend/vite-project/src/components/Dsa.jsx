@@ -86,6 +86,9 @@ const Dsa = () => {
             return;
         }
 
+        setListening('false');
+        setStart('false');
+
         const spokenApproach = text.trim();
         const questionText = question.trim();
         const codeText = code.trim();
@@ -149,12 +152,12 @@ const Dsa = () => {
         <div className='dsa-main'>
 
             {/* TOP 10% */}
-            <div className="dsa-top">
+            <div className="dsa-top" style={{ marginBottom: '8px', borderColor: "white", backgroundColor: 'black' }}>
                 <div className="dsa-header">
                     <button className="back-button" onClick={handleBack}>
                         <FaArrowLeft />
                     </button>
-                    <h1><span style={{ color: '#37fd00' }}>DSA-PREP</span></h1>
+                    <h1><span style={{ color: '#00c2fd', marginLeft: '20px', fontSize: '4vh' }}><b>DSA-PREP</b></span></h1>
                 </div>
 
                 <span style={{ color: '#3b82f6' }}>{listening ? "Listening..." : ""}</span>
@@ -176,13 +179,13 @@ const Dsa = () => {
             <div className="dsa-middle">
 
                 <div className="dsa-question">
-                    <h3><span style={{ color: '#3742e1' }}>Question</span></h3>
+                    <h3><span style={{ color: '#3742e1' }}><b>Question</b></span></h3>
                     <p>
                         {question || "Question will appear here"}
 
 
                     </p>
-                    <h3><span style={{ color: '#3742e1' }}>Constraint</span></h3>
+                    <h3><span style={{ color: '#3742e1' }}><b>Constraint</b></span></h3>
                     <p>
                         {constraint || "constraint will appear here"}
                     </p>

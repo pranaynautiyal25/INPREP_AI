@@ -12,7 +12,7 @@ const MockDsa = () => {
     return (
 
         <div className='dsa-main'>
-            <div className='dsa-top'>
+            <div className='dsa-top'style={{marginBottom:'8px',borderColor:"white",backgroundColor:'black'}}>
                 <div className='dsa-header'>
                     <h1><span style={{ color: '#37fd00' }}>MOCK INSIGHTS</span> : DSA</h1>
                 </div>
