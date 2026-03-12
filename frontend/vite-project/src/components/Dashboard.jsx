@@ -122,7 +122,7 @@ const Dashboard = () => {
                     <div style={{ marginTop: "8%" }}>
                         <button
                             className="button"
-                            onClick={() => navigate('/dev-mock')}
+                            onClick={() => navigate('/dev')}
                         >
                             Start New Dev Mock
                         </button>

@@ -7,10 +7,14 @@ import './dev.css'
 import { useState, useRef } from 'react';
 import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import axios from '../config/axios';
-import { useAuth } from '../Context/AuthContext';
+import axios from '../../config/axios';
+import { useAuth } from '../../Context/AuthContext';
+
 
 const Dev = () => {
+
+    const navigate = useNavigate();
+
     return (
         <div className="dev-main">
             <div className='dev-header'>
@@ -25,18 +29,18 @@ const Dev = () => {
                 <div className='dev-options'>
                     <div className='dev-manybuttons'>
                         <div>
-                            <button className='dev-button'> FrontEnd</button>
+                            <button className='dev-button' onClick={() => navigate('/dev/frontend')} > FrontEnd</button>
                         </div>
                         <div>
-                            <button className='dev-button'>BackEnd</button>
+                            <button className='dev-button' onClick={() => navigate('/dev/backend')}>BackEnd</button>
                         </div>
                     </div>
                     <div className='dev-manybuttons' style={{ marginTop: "16px" }}>
                         <div>
-                            <button className='dev-button'>FullStack</button>
+                            <button className='dev-button' onClick={() => navigate('/dev/fullstack')}>FullStack</button>
                         </div>
                         <div>
-                            <button className='dev-button'>Database</button>
+                            <button className='dev-button' onClick={() => navigate('/dev/database')}>Database</button>
                         </div>
                     </div>
                 </div>
@@ -46,7 +50,7 @@ const Dev = () => {
 
 
                 <div>
-                    <button className='dev-back'><FaArrowLeft className='back-button'/><span style={{marginLeft:'40px'}}><b>Back</b></span></button>
+                    <button className='dev-back' onClick={() => navigate('/dashboard')}><FaArrowLeft style={{fontSize:"5vh",width:'10vh', paddingLeft:'20px'}}/><span style={{ marginLeft: '60px'}}><b>Back</b></span></button>
                 </div>
             </div>
 
