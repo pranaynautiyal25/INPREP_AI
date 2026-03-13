@@ -1,11 +1,8 @@
-const express=require('express');
-const route=express.Router();
+const express = require('express');
+const { saveBackend, findBackend } = require('../controllers/backendController');
+
+const route = express.Router();
 
 
-route.post('/saveBackend',(req,res)=>{
-    res.send('save backend');
-})
-
-route.post('/findBackend',(res,req)=>{
-    res.send('save backend');
-})
+route.post('/saveBackend', saveBackend);
+route.post('/findBackend', findBackend);

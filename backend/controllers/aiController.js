@@ -200,4 +200,19 @@ IMPORTANT RULES
     }
 };
 
-module.exports = { generateQuestion, evaluateSubmission };
+
+const generateFrontendQuestion = () => {
+
+}
+
+
+const evaluateFrontend = () => {
+
+}
+
+module.exports = {
+    generateQuestion,
+    evaluateSubmission,
+    generateFrontendQuestion,
+    evaluateFrontend
+};

@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const devSchema = new mongoose.Schema(
     {
-        category:{
-            type:String,
-            required:true
+        category: {
+            type: String,
+            required: true
         },
         question: {
             type: String,
@@ -31,7 +31,7 @@ const devSchema = new mongoose.Schema(
             required: true
         }
     }
-)
+    , { timestamps: true })
 
 
 module.exports = mongoose.model('Dev', devSchema);

@@ -1,10 +1,7 @@
 const express=require('express');
+const { saveFullstack, findFullstack } = require('../controllers/fullstackController');
+
 const route=express.route();
 
-route.post('/saveFullstack',(req,res)=>{
-    res.send('save full');
-})
-
-route.post('/findFullstack',(req,res)=>{
-    res.send('find fullstack');
-})
+route.post('/saveFullstack',saveFullstack);
+route.post('/findFullstack',findFullstack);

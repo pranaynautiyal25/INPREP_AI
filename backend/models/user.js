@@ -25,6 +25,20 @@ const userSchema = new mongoose.Schema({
                 default: Date.now
             }
         }
+    ],
+
+    devHistory: [
+        {
+            devModelId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Dev',
+                required: true
+            },
+            attemptedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
     ]
 }, { timestamps: true });
 

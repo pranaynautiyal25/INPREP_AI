@@ -5,7 +5,7 @@ import axios from '../../config/axios'
 import { useAuth } from '../../Context/AuthContext';
 
 const Frontend = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const [text, setText] = useState("");
   const [listening, setListening] = useState(false);
@@ -66,11 +66,31 @@ const Frontend = () => {
   };
 
   const handleStart = () => {
+    if (start === true) {
+      return;
+    }
+    setStart(true);
 
+    //ai connection
   }
 
   const handleEvaluation = () => {
 
+    const finalAns = answer.trim();
+    const spokenApproach = text.trim();
+
+    if (finalAns == '' || spokenApproach == '') {
+      alert('Complete Your Test First');
+      return;
+    }
+
+    setStart(false);
+    setListening(false);
+
+    //ai connection
+
+
+    navigate('/dashboard');
   }
 
   const handleBack = () => {

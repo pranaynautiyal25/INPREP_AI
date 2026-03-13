@@ -1,10 +1,7 @@
-const express=require('express');
-const route=express.route();
+const express = require('express');
+const { saveFrontend, findFrontend } = require('../controllers/frontendController');
 
-route.post('/saveFrontend',(req,res)=>{
-    res.send('save frontend');
-})
+const route = express.route();
 
-route.post('/findFrontend',(req,res)=>{
-    res.send('find frontend');
-})
+route.post('/saveFrontend', saveFrontend);
+route.post('/findFrontend', findFrontend);

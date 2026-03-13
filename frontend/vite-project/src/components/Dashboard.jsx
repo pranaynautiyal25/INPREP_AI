@@ -5,6 +5,7 @@ import './Dashboard.css'
 import { FaSignOutAlt } from 'react-icons/fa';
 import DsaHistory from '../components/DsaHistory';
 import axios from '../config/axios.js'
+import DevHistory from '../components/DevHistory.jsx'
 
 const Dashboard = () => {
 
@@ -13,7 +14,11 @@ const Dashboard = () => {
 
 
     const [dsa, setDsa] = useState([]);
-    const [traverse, setTraverse] = useState(0);
+    const [dev, setDev] = useState([]);
+
+
+    const [traverse1, setTraverse1] = useState(0);
+    const [traverse2, setTraverse2] = useState(0);
 
     useEffect(() => {
         const fetchDsa = async () => {
@@ -33,21 +38,56 @@ const Dashboard = () => {
     }, []);
 
 
+    // useEffect(() => {
+    //     const fetchDsa = async () => {
+    //         const email = user.UserEmail;
+    //         const res = await axios.post('/api/auth/historyDsa', { email });
+    //         const payload = Array.isArray(res.data?.payload) ? res.data.payload : [];
+
+    //         const uniquePayload = payload.filter((item, index, arr) => {
+    //             if (!item?._id) return true;
+    //             return arr.findIndex((x) => x?._id === item._id) === index;
+    //         });
+
+    //         setDsa(uniquePayload);
+    //     };
+
+    //     fetchDsa();
+    // }, []);
+
+
     const nextDsa = () => {
-        if (traverse + 4 < dsa.length) {
-            setTraverse(traverse + 4);
+        if (traverse1 + 4 < dsa.length) {
+            setTraverse1(traverse1 + 4);
         }
     }
 
     const prevDsa = () => {
-        if (traverse - 4 >= 0) {
-            setTraverse(traverse - 4);
+        if (traverse1 - 4 >= 0) {
+            setTraverse1(traverse1 - 4);
         }
     }
 
-    const visible = (Array.isArray(dsa) ? dsa : [])
+    const nextDev = () => {
+        if (traverse2 + 4 < dsa.length) {
+            setTraverse2(traverse2 + 4);
+        }
+    }
+
+    const prevDev = () => {
+        if (traverse2 - 4 >= 0) {
+            setTraverse2(traverse2 - 4);
+        }
+    }
+
+    const visibleDsa = (Array.isArray(dsa) ? dsa : [])
         .filter((item) => item && typeof item === 'object')
-        .slice(traverse, traverse + 4);
+        .slice(traverse1, traverse1 + 4);
+
+
+    const visibleDev = (Array.isArray(dev) ? dev : [])
+        .filter((item) => item && typeof item === 'object')
+        .slice(traverse2, traverse2 + 4);
 
     return (
         <div className="container">
@@ -77,11 +117,11 @@ const Dashboard = () => {
                                 <button className='dir-button' onClick={prevDsa}>⬅</button>
 
                                 <div className="dsa-cards">
-                                    {visible.map((item, index) => (
+                                    {visibleDsa.map((item, index) => (
                                         <DsaHistory
-                                            key={`${item?._id || 'no-id'}-${traverse + index}`}
+                                            key={`${item?._id || 'no-id'}-${traverse1 + index}`}
                                             id={item?._id}
-                                            testNo={traverse + index + 1}
+                                            testNo={traverse1 + index + 1}
                                             date={item?.createdAt}
                                             payload={item}
                                         />
@@ -102,7 +142,30 @@ const Dashboard = () => {
 
                     <div className='dev-previous'>
                         <h3><b>Development Mock History</b></h3>
-                        <p>No previous Dev mock records yet.</p>
+
+                        {dev.length === 0 ? (
+                            <p>No previous Dev mock records yet.</p>
+                        ) : (
+                            <div className="dsa-slider">
+
+                                <button className='dir-button' onClick={prevDev}>⬅</button>
+
+                                <div className="dsa-cards">
+                                    {visibleDev.map((item, index) => (
+                                        <DevHistory
+                                            key={`${item._id}`}
+                                            id={item._id}
+                                            testNo={traverse2 + index + 1}
+                                            date={item?.createdAt}
+                                            payload={item}
+                                        />
+                                    ))}
+                                </div>
+
+                                <button className='dir-button' onClick={nextDev}>➡</button>
+
+                            </div>
+                        )}
                     </div>
 
                 </div>

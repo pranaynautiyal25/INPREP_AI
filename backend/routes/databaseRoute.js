@@ -1,10 +1,7 @@
 const express=require('express');
+const {saveDatabase,findDatabase}=require('../controllers/databaseController')
+
 const route=express.route();
 
-route.post('/saveDatabase',(req,res)=>{
-    res.send('save database');
-})
-
-route.post('/findDatabase',(req,res)=>{
-    res.send('find database');
-})
+route.post('/saveDatabase',saveDatabase);
+route.post('/findDatabase',findDatabase);
