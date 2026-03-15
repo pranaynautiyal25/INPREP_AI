@@ -11,7 +11,7 @@ const saveBackend = async (req, res) => {
             correctAnswer,
             answerScore,
             explainationScore,
-            improvementScore
+            improvementScope
         } = req.body;
         const newDev = new Dev({
             category,
@@ -20,7 +20,7 @@ const saveBackend = async (req, res) => {
             correctAnswer,
             answerScore,
             explainationScore,
-            improvementScore
+            improvementScope
         })
 
         await newDev.save();
@@ -36,6 +36,7 @@ const saveBackend = async (req, res) => {
 
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Failed to Save Exam",
         })

@@ -38,22 +38,22 @@ const Dashboard = () => {
     }, []);
 
 
-    // useEffect(() => {
-    //     const fetchDsa = async () => {
-    //         const email = user.UserEmail;
-    //         const res = await axios.post('/api/auth/historyDsa', { email });
-    //         const payload = Array.isArray(res.data?.payload) ? res.data.payload : [];
+    useEffect(() => {
+        const fetchDev = async () => {
+            const email = user.UserEmail;
+            const res = await axios.post('/api/auth/historyDev', { email });
+            const payload = Array.isArray(res.data?.payload) ? res.data.payload : [];
 
-    //         const uniquePayload = payload.filter((item, index, arr) => {
-    //             if (!item?._id) return true;
-    //             return arr.findIndex((x) => x?._id === item._id) === index;
-    //         });
+            const uniquePayload = payload.filter((item, index, arr) => {
+                if (!item?._id) return true;
+                return arr.findIndex((x) => x?._id === item._id) === index;
+            });
 
-    //         setDsa(uniquePayload);
-    //     };
+            setDev(uniquePayload);
+        };
 
-    //     fetchDsa();
-    // }, []);
+        fetchDev();
+    }, []);
 
 
     const nextDsa = () => {

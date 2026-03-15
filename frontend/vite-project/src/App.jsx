@@ -7,6 +7,7 @@ import About from './components/About'
 import Landing from './components/Landing'
 import Dsa from './components/Dsa'
 import MockDsa from './components/MockDsa'
+import MockDev from './components/MockDev'
 
 import Dev from './components/dev/Dev'
 import Frontend from './components/dev/Frontend'
@@ -42,6 +43,11 @@ function App() {
           <Route path='/mock-dsa/:id' element={<ProtectedRoute>
             <MockDsa />
           </ProtectedRoute>} />
+
+          <Route path='/mock-dev/:id' element={<ProtectedRoute>
+            <MockDev />
+          </ProtectedRoute>} />
+
 
           <Route path='/dev' element={
 

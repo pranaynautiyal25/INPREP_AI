@@ -7,19 +7,19 @@ const devSchema = new mongoose.Schema(
             required: true
         },
         question: {
-            type: String,
+            type: [String],
             required: true
         },
         yourAnswer: {
-            type: String,
+            type: [String],
             required: true
         },
         correctAnswer: {
-            type: String,
+            type: [String],
             required: true
         },
         answerScore: {
-            type: Number,
+            type: [Number],
             required: true
         },
         explainationScore: {
