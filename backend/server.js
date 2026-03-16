@@ -5,6 +5,9 @@ const connectDB = require('./config/db');
 const aiRouter = require('./routes/aiRoutes');
 const frontendRouter = require('./routes/frontendRoutes')
 const backendRouter = require('./routes/backendRoutes');
+const databaseRouter = require('./routes/databaseRoute');
+const fullstackRouter = require('./routes/fullstackRoutes');
+
 const app = express();
 const cors = require('cors');
 
@@ -18,6 +21,8 @@ app.use('/api/dsa', dsaRouter);
 app.use('/api/ai', aiRouter);
 app.use('/api/frontend', frontendRouter);
 app.use('/api/backend', backendRouter);
+app.use('/api/database', databaseRouter);
+app.use('/api/fullstack', fullstackRouter);
 
 app.get('/', (req, res) => {
     res.send('hello world');

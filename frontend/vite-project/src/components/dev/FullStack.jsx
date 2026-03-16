@@ -5,8 +5,8 @@ import axios from '../../config/axios'
 import { useAuth } from '../../Context/AuthContext';
 
 const FullStack = () => {
-
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [text, setText] = useState("");
   const [listening, setListening] = useState(false);
@@ -17,9 +17,15 @@ const FullStack = () => {
   const [question2, setQuestion2] = useState('');
   const [question3, setQuestion3] = useState('');
   const [question4, setQuestion4] = useState('');
-  const [question5, setQuestion5] = useState('');
+  //const [question5, setQuestion5] = useState('');
 
-  const [answer, setAnswer] = useState('');
+
+  const [answer1, setAnswer1] = useState('');
+  const [answer2, setAnswer2] = useState('');
+  const [answer3, setAnswer3] = useState('');
+  const [answer4, setAnswer4] = useState('');
+  // const [answer5, setAnswer5] = useState('');
+
   const [speech, setSpeech] = useState('');
   const [ansEval, setAnsEval] = useState({});
   const [comEval, setComEval] = useState({});
@@ -66,17 +72,81 @@ const FullStack = () => {
     }
   };
 
-  const handleStart = () => {
+  const handleStart = async () => {
+    if (start === true) {
+      return;
+    }
 
+
+    //ai connection
+    try {
+      const res = await axios.post('/api/ai/generate-fullstack');
+      setQuestion1(res.data.question1);
+      setQuestion2(res.data.question2);
+      setQuestion3(res.data.question3);
+      setQuestion4(res.data.question4);
+      setStart(true);
+    }
+    catch (error) {
+      alert('failed to generate question');
+    }
   }
 
-  const handleEvaluation = () => {
+  const handleEvaluation = async () => {
 
+    const finalAns1 = answer1.trim();
+    const finalAns2 = answer2.trim();
+    const finalAns3 = answer3.trim();
+    const finalAns4 = answer4.trim();
+
+    const spokenApproach = text.trim();
+
+    if (finalAns1 == '' || finalAns2 == '' || finalAns3 == '' || finalAns4 == '' || spokenApproach == '') {
+      alert('Complete Your Test First');
+      return;
+    }
+
+    setStart(false);
+    setListening(false);
+
+    //ai connection
+
+    try {
+      const questions = [question1, question2, question3, question4];
+      const answers = [finalAns1, finalAns2, finalAns3, finalAns4];
+
+      const res = await axios.post('/api/ai/evaluate-fullstack', { questions, answers, spokenApproach });
+      const yourAnswer = res.data.yourAnswers;
+      const correctAnswer = res.data.correctAnswers;
+      const answerScore = res.data.answerScores;
+      const explainationScore = res.data.explanationScore;
+      const improvementScope = res.data.improvementScope;
+
+      const payload = {
+        email: user.UserEmail,
+        category: "Full-Stack",
+        question: questions,
+        yourAnswer: yourAnswer,
+        correctAnswer: correctAnswer,
+        answerScore: answerScore,
+        explainationScore: explainationScore,
+        improvementScope: improvementScope
+      }
+
+      await axios.post('/api/fullstack/saveFullstack', payload);
+      alert('exam saved successfully', res);
+    }
+    catch (error) {
+      alert('failed to save exam');
+    }
+
+
+    navigate('/dashboard');
   }
 
   const handleBack = () => {
     if (start == true) {
-      window.alert('FullSatck Exam Ongoing');
+      window.alert('FullStack Exam Ongoing');
       return;
     }
 
@@ -133,10 +203,7 @@ const FullStack = () => {
             {question4 || "question will appear here"}
           </p>
 
-          <h3><span style={{ color: '#3742e1' }}><b>Question 5</b></span></h3>
-          <p>
-            {question5 || "question will appear here"}
-          </p>
+
 
 
         </div>
@@ -144,8 +211,26 @@ const FullStack = () => {
         <div className="dsa-code">
           <textarea
             placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 1 : ANSWER/CODE)"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
+            value={answer1}
+            onChange={(e) => setAnswer1(e.target.value)}
+          ></textarea>
+
+          <textarea
+            placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 2 : ANSWER/CODE)"
+            value={answer2}
+            onChange={(e) => setAnswer2(e.target.value)}
+          ></textarea>
+
+          <textarea
+            placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 3 : ANSWER/CODE)"
+            value={answer3}
+            onChange={(e) => setAnswer3(e.target.value)}
+          ></textarea>
+
+          <textarea
+            placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 4 : ANSWER/CODE)"
+            value={answer4}
+            onChange={(e) => setAnswer4(e.target.value)}
           ></textarea>
 
         </div>

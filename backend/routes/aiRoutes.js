@@ -14,12 +14,19 @@ const { generateQuestion,
 router.post('/generate-question', generateQuestion);
 router.post('/evaluate', evaluateSubmission);
 
+
+
 router.post('/generate-frontend', generateFrontendQuestion);
 router.post('/evaluate-frontend', evaluateFrontend);
 
-
 router.post('/generate-backend', generateBackendQuestion);
 router.post('/evaluate-backend', evaluateBackend);
+
+router.post('/generate-fullstack', generateFullstackQuestion);
+router.post('/evaluate-fullstack', evaluateFullstack);
+
+router.post('/generate-database', generateDatabaseQuestion);
+router.post('/evaluate-database', evaluateDatabase);
 
 
 module.exports = router;

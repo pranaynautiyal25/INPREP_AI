@@ -748,6 +748,8 @@ IMPORTANT RULES
             const cleaned = extractJSON(responseText);
             const parsed = JSON.parse(cleaned);
 
+            console.log(parsed);
+            
             yourAnswers.push(parsed.yourAnswer);
             correctAnswers.push(parsed.correctAnswer);
             answerScores.push(parsed.answerScore);
@@ -799,6 +801,7 @@ Rules:
         const finalResponseText = finalCompletion.choices[0].message.content;
         const finalParsed = JSON.parse(extractJSON(finalResponseText));
 
+        console.log(finalParsed);
         res.json({
             yourAnswers,
             correctAnswers,

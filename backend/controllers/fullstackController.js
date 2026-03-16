@@ -11,7 +11,7 @@ const saveFullstack = async (req, res) => {
             correctAnswer,
             answerScore,
             explainationScore,
-            improvementScore
+            improvementScope
         } = req.body;
         const newDev = new Dev({
             category,
@@ -20,10 +20,13 @@ const saveFullstack = async (req, res) => {
             correctAnswer,
             answerScore,
             explainationScore,
-            improvementScore
+            improvementScope
         })
 
+        console.log("before save");
         await newDev.save();
+
+        console.log('after save');
 
         const user = await User.findOne({ email });
 
@@ -38,6 +41,7 @@ const saveFullstack = async (req, res) => {
     catch (error) {
         res.status(500).json({
             message: "Failed to Save Exam",
+            error: error
         })
     }
 
@@ -61,6 +65,7 @@ const findFullstack = async (req, res) => {
 
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "failde to fetch exam"
         })
@@ -68,4 +73,4 @@ const findFullstack = async (req, res) => {
 }
 
 
-module.exports= {saveFullstack,findFullstack};
+module.exports = { saveFullstack, findFullstack };
