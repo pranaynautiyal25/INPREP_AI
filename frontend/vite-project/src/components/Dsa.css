@@ -1,235 +1,648 @@
-.dsa-audio{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.dsa-question {
-    scrollbar-width: thin;
-    scrollbar-color: #555 #232323;
-}
-
-.dsa-code {
-    scrollbar-width:none;
-    scrollbar-color: #ffffff #000000;
+/* ─── Page Shell ─── */
+.dsa-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #1a1263, #24243e);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
 }
 
-.dsa-code textarea {
-    scrollbar-width: thin;
-    scrollbar-color: #ffffff #000000;
+/* ─── Blobs ─── */
+.blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.22;
+    pointer-events: none;
+    animation: floatBlob 10s ease-in-out infinite alternate;
+    z-index: 0;
 }
 
-/* Main container */
-.dsa-main {
-    height: 100vh;
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #6c63ff, #3b2fcf);
+    top: -100px;
+    left: -120px;
+    animation-duration: 9s;
+}
+
+.blob-2 {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, #00d4ff, #0080ff);
+    bottom: -80px;
+    right: -80px;
+    animation-duration: 12s;
+}
+
+.blob-3 {
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, #ff6fd8, #9b59b6);
+    top: 50%;
+    left: 55%;
+    animation-duration: 14s;
+}
+
+@keyframes floatBlob {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(28px, 36px) scale(1.07);
+    }
+}
+
+/* ─── Inner Layout ─── */
+.dsa-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 28px 40px;
     display: flex;
     flex-direction: column;
-    background-color: #000000;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-
+    gap: 20px;
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ================= TOP (10%) ================= */
-.dsa-top {
-    height: 10%;
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Top Bar ─── */
+.dsa-topbar {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    background-color: #202020;
-    border: 10px solid #000000;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.11);
     border-radius: 20px;
-}
-
-.dsa-header h1 {
-    font-size: 22px;
-}
-
-.dsa-header {
-    display: flex;
-    align-items: center;
+    padding: 14px 22px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     gap: 12px;
+    flex-wrap: wrap;
 }
 
-.back-button {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: none;
-    background-color: #000000;
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
+.dsa-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.dsa-topbar-center {
+    flex: 1;
     display: flex;
     justify-content: center;
+}
+
+.dsa-topbar-right {
+    display: flex;
     align-items: center;
-    transition: 0.2s;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
-.back-button:hover {
-    background-color: #484747;
-    transform: scale(1.05);
-}
-
-.back-button:active {
-    background-color: #ffffff;
-    color: #000000;
-    transform: scale(0.95);
-}
-
-/* Audio Button (Meeting Style) */
-.mic-button {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    border: none;
-    background-color: #000000;
-    color: white;
-    font-size: 32px;
+/* ─── Back Button ─── */
+.dsa-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.13);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 12px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.2s;
+    font-family: inherit;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-.mic-button:hover {
-    background-color: #484747;
-    transform: scale(1.05);
+.dsa-back-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    transform: translateX(-2px);
 }
 
-.mic-button:active {
-    background-color: #ffffff;
-    transform: scale(0.95);
-}
-
-/* ================= MIDDLE (80%) ================= */
-.dsa-middle {
-    height: 69%;
-    display: flex;
-    background-color: white;
-    border-radius: 20px;
-}
-
-/* Question Section */
-.dsa-question {
-    width: 50%;
-    padding: 20px 28px 20px 20px;
-    overflow-y: auto;
-    margin-bottom: 11px;
-    margin-left:10px;
-    margin-top:11px;
-
-    box-sizing: border-box;
-    background-color: #000000;
-    border-radius: 10px;
-    border: 10px solid #000000;
-}
-
-/* Code Section */
-.dsa-code {
-    width: 50%;
-    padding: 12px;
-    overflow-y: auto;
-    margin-bottom: 8px;
-    box-sizing: border-box;
-    height: 100%;
-}
-
-.dsa-code textarea {
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    max-height: 100%;
-    background-color: #000000;
-    color: white;
-    border: 20px solid #000000;
-    border-radius: 8px;
-    resize: none;
-    font-family: monospace;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-/* ================= BOTTOM (10%) ================= */
-.dsa-bottom {
-    height: 10%;
+/* ─── DSA Tag + Title ─── */
+.dsa-title-wrap {
     display: flex;
     align-items: center;
-    padding-left:20px;
-    padding-right: 20px;
-    border-top: 1px solid #333;
-    background-color: #000000;
-    border: #ffffff 10px solid;
-    border-radius: 20px;
-    margin-top:8px;
-
-}
-
-/* 80% audio text */
-.audio-text {
-    width: 80%;
-    color: #bbbbbb;
-    overflow-x: auto;
-    font-size: 10px;
-}
-
-/* 20% button */
-.dsa-button {
-    width: 40%;
-    display: flex;
-    justify-content: flex-end;
     gap: 10px;
 }
 
-.dsa-button button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    background-color: #1900ff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-
+.dsa-tag {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
 }
 
-.dsa-button button:hover {
-    background-color: #e85d00;
+.dsa-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.4px;
 }
 
-.dsa-button button:active {
-    background-color: #ff1100;
-}
-
-.start-button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    background-color: #16a34a;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+/* ─── Listening Badge ─── */
+.listening-badge {
     display: flex;
     align-items: center;
+    gap: 8px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1.5px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    animation: fadeIn 0.3s ease;
 }
 
-.start-button:hover {
-    background-color: #15803d;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.start-button:active {
-    background-color: #166534;
+.listening-dot {
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: blink 1s ease-in-out infinite;
 }
 
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+}
+
+/* ─── Control Buttons ─── */
+.dsa-ctrl-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    border: 1.5px solid transparent;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.dsa-ctrl-btn:hover {
+    transform: translateY(-2px);
+}
+
+.dsa-ctrl-btn:active {
+    transform: translateY(0);
+}
+
+/* Start */
+.dsa-ctrl-btn--start {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+}
+
+.dsa-ctrl-btn--start:hover {
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+}
+
+.dsa-ctrl-btn--start.active {
+    background: linear-gradient(135deg, #047857, #059669);
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.35);
+}
+
+/* Mic */
+.dsa-ctrl-btn--mic {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+}
+
+.dsa-ctrl-btn--mic:hover {
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.5);
+}
+
+.dsa-ctrl-btn--mic.mic-active {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+    animation: micPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 28px rgba(239, 68, 68, 0.7);
+    }
+}
+
+/* Reset */
+.dsa-ctrl-btn--reset {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.13);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.dsa-ctrl-btn--reset:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+/* Spin animation for FaSpinner */
 .spin-icon {
-    animation: spin 0.1s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* ─── Workspace: Question + Code ─── */
+.dsa-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    min-height: 340px;
+}
+
+/* ─── Panels ─── */
+.dsa-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    padding: 20px 22px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.22s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dsa-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 20px 20px 0 0;
+}
+
+.dsa-panel--question::before {
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+}
+
+.dsa-panel--code::before {
+    background: linear-gradient(90deg, #0284c7, #06b6d4);
+}
+
+.dsa-panel:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Panel Header ─── */
+.dsa-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.dsa-panel-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.dsa-panel-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.dsa-live-badge {
+    font-size: 10px;
+    font-weight: 800;
+    color: #86efac;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-left: 4px;
+    animation: fadeIn 0.4s ease;
+}
+
+.dsa-panel-body {
+    font-size: 14.5px;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.75;
+    margin: 0;
+    font-weight: 400;
+}
+
+.dsa-panel-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.07);
+    margin: 6px 0;
+}
+
+/* ─── Code Editor ─── */
+.dsa-editor-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dsa-editor-dots {
+    display: flex;
+    gap: 6px;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dsa-editor-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+}
+
+.dsa-editor-dots span:nth-child(1) {
+    background: #ef4444;
+}
+
+.dsa-editor-dots span:nth-child(2) {
+    background: #f59e0b;
+}
+
+.dsa-editor-dots span:nth-child(3) {
+    background: #10b981;
+}
+
+.dsa-textarea {
+    flex: 1;
+    min-height: 240px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #a5f3fc;
+    font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+    font-size: 13.5px;
+    line-height: 1.8;
+    padding: 16px 18px;
+    resize: vertical;
+    caret-color: #06b6d4;
+}
+
+.dsa-textarea::placeholder {
+    color: rgba(165, 243, 252, 0.25);
+}
+
+/* ─── Bottom: Speech + Submit ─── */
+.dsa-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: stretch;
+}
+
+/* ─── Speech Panel ─── */
+.dsa-speech-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    padding: 18px 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dsa-speech-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7c3aed, #ec4899);
+    border-radius: 18px 18px 0 0;
+}
+
+.dsa-speech-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    min-height: 56px;
+    font-weight: 400;
+}
+
+.dsa-speech-text.placeholder {
+    color: rgba(255, 255, 255, 0.28);
+    font-style: italic;
+}
+
+/* ─── Submit Button ─── */
+.dsa-submit-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 28px;
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dsa-submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #3730c4, #0891b2);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.dsa-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(79, 70, 229, 0.55);
+}
+
+.dsa-submit-btn:hover::before {
+    opacity: 1;
+}
+
+.dsa-submit-btn:active {
+    transform: translateY(0);
+}
+
+.dsa-submit-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.dsa-submit-arrow {
+    font-size: 20px;
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.dsa-submit-btn:hover .dsa-submit-arrow {
+    transform: translateY(4px);
+}
+
+/* ─── Responsive: Tablet ─── */
+@media (max-width: 900px) {
+    .dsa-inner {
+        padding: 18px 18px 36px;
+    }
+
+    .dsa-workspace {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .dsa-textarea {
+        min-height: 180px;
+    }
+
+    .dsa-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .dsa-submit-btn {
+        flex-direction: row;
+        min-width: unset;
+        width: 100%;
+        padding: 16px 24px;
+    }
+
+    .dsa-submit-arrow {
+        transform: none !important;
+    }
+
+    .dsa-submit-btn:hover .dsa-submit-arrow {
+        transform: translateX(5px) !important;
+    }
+}
+
+/* ─── Responsive: Mobile ─── */
+@media (max-width: 600px) {
+    .dsa-topbar {
+        padding: 12px 14px;
+        border-radius: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dsa-topbar-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dsa-ctrl-btn span {
+        display: none;
+    }
+
+    .dsa-ctrl-btn {
+        padding: 10px 14px;
+        border-radius: 10px;
+    }
+
+    .dsa-back-btn span {
+        display: none;
+    }
+
+    .dsa-back-btn {
+        padding: 9px 12px;
+    }
+
+    .dsa-title {
+        font-size: 17px;
+    }
+
+    .blob {
+        opacity: 0.13;
     }
 }

@@ -1,7 +1,6 @@
-
 import React, { useState, useRef } from 'react';
 import './Dsa.css';
-import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner } from 'react-icons/fa';
+import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner, FaStop } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from '../config/axios';
 import { useAuth } from '../Context/AuthContext';
@@ -11,12 +10,9 @@ const Dsa = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
 
-
-
     const [text, setText] = useState("");
     const [listening, setListening] = useState(false);
     const [start, setStart] = useState(false);
-
 
     const [question, setQuestion] = useState('');
     const [constraint, setConstraint] = useState('');
@@ -25,12 +21,11 @@ const Dsa = () => {
     const [codeEval, setCodeEval] = useState({});
     const [comEval, setComEval] = useState({});
 
-
     const recognitionRef = useRef(null);
 
     const handleMicClick = () => {
         if (start === false) {
-            window.alert('start the test first');
+            window.alert('Start the test first');
             return;
         }
         const SpeechRecognition =
@@ -42,7 +37,6 @@ const Dsa = () => {
         }
 
         if (!listening) {
-            // START LISTENING
             const recognition = new SpeechRecognition();
             recognition.continuous = true;
             recognition.interimResults = true;
@@ -59,17 +53,13 @@ const Dsa = () => {
             recognition.start();
             recognitionRef.current = recognition;
             setListening(true);
-
         } else {
-            // STOP LISTENING
             recognitionRef.current.stop();
             setListening(false);
         }
     };
 
-
     const handleStart = async () => {
-        //ai connection
         try {
             const res = await axios.post('/api/ai/generate-question');
             setQuestion(res.data.question);
@@ -101,7 +91,6 @@ const Dsa = () => {
         setSpeech(spokenApproach);
 
         try {
-            // 1. Get AI evaluation
             const evalRes = await axios.post('/api/ai/evaluate', {
                 question: questionText,
                 constraint: constraintText,
@@ -109,11 +98,8 @@ const Dsa = () => {
                 explanation: spokenApproach,
             });
 
-            console.log(evalRes);
+            const evaluation = evalRes.data;
 
-            const evaluation = evalRes.data; // contains all fields
-
-            // 2. Save to database
             const payload = {
                 email: user.UserEmail,
                 question: questionText,
@@ -121,9 +107,9 @@ const Dsa = () => {
                 yourApproach: evaluation.yourApproach,
                 betterApproach: evaluation.betterApproach,
                 codeScore: evaluation.codeScore,
-                explainationScore: evaluation.explanationScore, // note field name matching your schema
+                explainationScore: evaluation.explanationScore,
                 codeReview: evaluation.codeReview,
-                explainationReview: evaluation.explanationReview, // make sure it's spelled correctly
+                explainationReview: evaluation.explanationReview,
                 improvementScope: evaluation.improvementScope,
             };
 
@@ -133,84 +119,152 @@ const Dsa = () => {
         } catch (error) {
             alert(error?.response?.data?.message || 'Evaluation failed');
         }
-
-
-
-
     }
-
 
     const handleBack = () => {
         if (start === true) {
-            window.alert('Dsa Exam Ongoing');
+            window.alert('DSA Exam Ongoing');
             return;
         }
-
         navigate('/dashboard');
     }
+
     return (
-        <div className='dsa-main'>
+        <div className="dsa-page">
 
-        
-            <div className="dsa-top" style={{ marginBottom: '8px', borderColor: "white", backgroundColor: 'black' }}>
-                <div className="dsa-header">
-                    <button className="back-button" onClick={handleBack}>
-                        <FaArrowLeft />
+            {/* Blobs */}
+            <div className="blob blob-1"></div>
+            <div className="blob blob-2"></div>
+            <div className="blob blob-3"></div>
+
+            <div className="dsa-inner">
+
+                {/* ── Top Bar ── */}
+                <div className="dsa-topbar">
+
+                    <div className="dsa-topbar-left">
+                        <button className="dsa-back-btn" onClick={handleBack}>
+                            <FaArrowLeft />
+                            <span>Dashboard</span>
+                        </button>
+                        <div className="dsa-title-wrap">
+                            <span className="dsa-tag">DSA</span>
+                            <h1 className="dsa-title">DSA-PREP</h1>
+                        </div>
+                    </div>
+
+                    <div className="dsa-topbar-center">
+                        {listening && (
+                            <div className="listening-badge">
+                                <span className="listening-dot"></span>
+                                Listening...
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="dsa-topbar-right">
+
+                        {/* Start / Generating button */}
+                        <button
+                            className={`dsa-ctrl-btn dsa-ctrl-btn--start ${start ? 'active' : ''}`}
+                            onClick={handleStart}
+                            title={start ? "Test Running" : "Start Test"}
+                        >
+                            {start
+                                ? <FaSpinner className="spin-icon" />
+                                : <FaPlay />
+                            }
+                            <span>{start ? "Running" : "Start"}</span>
+                        </button>
+
+                        {/* Mic button */}
+                        <button
+                            className={`dsa-ctrl-btn dsa-ctrl-btn--mic ${listening ? 'mic-active' : ''}`}
+                            onClick={handleMicClick}
+                            title={listening ? "Stop Mic" : "Start Mic"}
+                        >
+                            {listening ? <FaStop /> : <FaMicrophone />}
+                            <span>{listening ? "Stop" : "Mic"}</span>
+                        </button>
+
+                        {/* Reset speech */}
+                        <button
+                            className="dsa-ctrl-btn dsa-ctrl-btn--reset"
+                            onClick={() => setText("")}
+                            title="Clear Speech"
+                        >
+                            <FaSyncAlt />
+                            <span>Clear</span>
+                        </button>
+
+                    </div>
+                </div>
+
+                {/* ── Middle: Question + Code Editor ── */}
+                <div className="dsa-workspace">
+
+                    {/* Question Panel */}
+                    <div className="dsa-panel dsa-panel--question">
+                        <div className="dsa-panel-header">
+                            <span className="dsa-panel-icon">❓</span>
+                            <span className="dsa-panel-label">Question</span>
+                            {start && <span className="dsa-live-badge">LIVE</span>}
+                        </div>
+                        <p className="dsa-panel-body">
+                            {question || "Question will appear here once you start the test..."}
+                        </p>
+
+                        <div className="dsa-panel-divider"></div>
+
+                        <div className="dsa-panel-header">
+                            <span className="dsa-panel-icon">⚠️</span>
+                            <span className="dsa-panel-label">Constraint</span>
+                        </div>
+                        <p className="dsa-panel-body">
+                            {constraint || "Constraint will appear here..."}
+                        </p>
+                    </div>
+
+                    {/* Code Editor Panel */}
+                    <div className="dsa-panel dsa-panel--code">
+                        <div className="dsa-panel-header">
+                            <span className="dsa-panel-icon">💻</span>
+                            <span className="dsa-panel-label">Code Editor</span>
+                        </div>
+                        <div className="dsa-editor-wrap">
+                            <div className="dsa-editor-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <textarea
+                                className="dsa-textarea"
+                                placeholder="// Type your code here..."
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
+                                spellCheck={false}
+                            />
+                        </div>
+                    </div>
+
+                </div>
+
+                {/* ── Bottom: Speech + Submit ── */}
+                <div className="dsa-bottom">
+
+                    <div className="dsa-speech-panel">
+                        <div className="dsa-panel-header">
+                            <span className="dsa-panel-icon">🎙️</span>
+                            <span className="dsa-panel-label">Your Spoken Explanation</span>
+                        </div>
+                        <div className={`dsa-speech-text ${text ? '' : 'placeholder'}`}>
+                            {text || "Your speech will appear here as you speak..."}
+                        </div>
+                    </div>
+
+                    <button className="dsa-submit-btn" onClick={handleEvaluation}>
+                        <span>Submit & Evaluate</span>
+                        <span className="dsa-submit-arrow">→</span>
                     </button>
-                    <h1><span style={{ color: '#00c2fd', marginLeft: '20px', fontSize: '4vh' }}><b>DSA-PREP</b></span></h1>
-                </div>
 
-                <span style={{ color: '#3b82f6' }}>{listening ? "Listening..." : ""}</span>
-
-                <div className="dsa-audio">
-                    <button className="mic-button" onClick={handleMicClick}>
-                        <FaMicrophone />
-                    </button>
-                    <button className='mic-button' onClick={() => setText("")}>
-                        <FaSyncAlt />
-                    </button>
-                    <button className="mic-button" onClick={handleStart}>
-                        {start ? <FaSpinner className="spin-icon" /> : <FaPlay />}
-                    </button>
-                </div>
-            </div>
-
-            
-            <div className="dsa-middle">
-
-                <div className="dsa-question">
-                    <h3><span style={{ color: '#3742e1' }}><b>Question</b></span></h3>
-                    <p>
-                        {question || "Question will appear here"}
-
-
-                    </p>
-                    <h3><span style={{ color: '#3742e1' }}><b>Constraint</b></span></h3>
-                    <p>
-                        {constraint || "constraint will appear here"}
-                    </p>
-                </div>
-
-                <div className="dsa-code">
-                    <textarea
-                        placeholder="Type Your Code Here"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-        
-            <div className="dsa-bottom">
-
-                <div className="audio-text">
-                    {text || "Your speech will appear here..."}
-                </div>
-
-                <div className="dsa-button">
-                    <button className="" onClick={handleEvaluation}>Submit and Evaluate</button>
                 </div>
 
             </div>
@@ -218,4 +272,4 @@ const Dsa = () => {
     )
 }
 
-export default Dsa
+export default Dsa;
