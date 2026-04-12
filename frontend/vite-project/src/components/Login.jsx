@@ -9,22 +9,18 @@ const Login = () => {
     const navigate = useNavigate();
     const { login, user } = useAuth();
 
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
+    const [error, setError] = useState('');
 
-    const [error, setError] = useState('')
     // If already authenticated, redirect to dashboard
     if (user) {
         return <Navigate to="/dashboard" replace />;
     }
-
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,38 +36,46 @@ const Login = () => {
             return;
         }
 
-
-        //backend connection for login
         try {
             setError('');
             await axios.post('/api/auth/login', { email, password });
             const userName = email.split('@')[0];
             login({ UserEmail: email, UserName: userName });
             navigate('/dashboard');
-
         }
         catch (e) {
             setError(e?.response?.data?.message || 'Login failed');
         }
-
-
-
     }
 
     return (
+        <div className="login-page">
 
-        <div className="login-main">
-            <div className="login-header">
-                <b><p style={{ color: "#2200ff" }}>Welcome Back User , Glad To See You Again...</p></b>
-            </div>
+            {/* Decorative blobs */}
+            <div className="blob blob-1"></div>
+            <div className="blob blob-2"></div>
+            <div className="blob blob-3"></div>
 
-            <div>
-                <div className="form">
-                    <form onSubmit={handleSubmit}>
-                        <div className="login-input">
-                            <b>
-                                <p style={{ fontSize: "13px", paddingRight: "40px" }}>Email  :</p></b>
+            <div className="login-card">
+
+                {/* Brand Header */}
+                <div className="login-brand">
+                    <div className="brand-icon">🎯</div>
+                    <h1 className="brand-title">INPREP<span>AI</span></h1>
+                </div>
+
+                <div className="login-header">
+                    <p>Welcome Back User, Glad To See You Again...</p>
+                </div>
+
+                <form className="login-form" onSubmit={handleSubmit}>
+
+                    <div className="field-group">
+                        <label className="field-label">Email</label>
+                        <div className="input-wrapper">
+                            <span className="input-icon">✉️</span>
                             <input
+                                className="field-input"
                                 type="email"
                                 placeholder="Enter your email"
                                 value={email}
@@ -81,10 +85,15 @@ const Login = () => {
                                 }}
                             />
                         </div>
-                        <div className="login-input"><b>
-                            <p style={{ fontSize: "13px", paddingRight: "15px" }}>Password  : </p>
-                        </b>
+                        {emailError && <span className="field-error">{emailError}</span>}
+                    </div>
+
+                    <div className="field-group">
+                        <label className="field-label">Password</label>
+                        <div className="input-wrapper">
+                            <span className="input-icon">🔒</span>
                             <input
+                                className="field-input"
                                 type="password"
                                 placeholder="Enter your password"
                                 value={password}
@@ -94,21 +103,23 @@ const Login = () => {
                                 }}
                             />
                         </div>
-                        <div className="loginButton">
-                            <button type="submit">Log In</button>
-                        </div>
-                        {error && <p className="error">{error}</p>}
-                    </form>
+                        {passwordError && <span className="field-error">{passwordError}</span>}
+                    </div>
 
+                    {error && <p className="error-banner">{error}</p>}
+
+                    <button className="login-btn" type="submit">
+                        <span>Log In</span>
+                        <span className="btn-arrow">→</span>
+                    </button>
+
+                </form>
+
+                <div className="login-footer-links">
+                    <p>New to INPREP-AI? <Link to="/signup">Sign Up</Link></p>
+                    <p><Link to="/">← Back to Home</Link></p>
                 </div>
-                <div className="extra-links">
-                    <p>
-                        New to INPREP-AI? <Link to="/signup">Sign Up</Link>
-                    </p>
-                    <p>
-                        <Link to="/">Back to Home</Link>
-                    </p>
-                </div>
+
             </div>
         </div>
     )

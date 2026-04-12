@@ -6,33 +6,63 @@ const Landing = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="landing-main">
-            <div className='landing-header'>
-                <h1><span style={{ color: "#0004ff", fontSize: '40px' }}>INPREP-AI</span></h1>
-                <p style={{ paddingTop: "20px"}}>
-                    <span style={{color: "#5100ff", fontSize: '20px' }}><b>Your AI-powered mock interview partner</b></span>
-                </p>
+        <div className="landing-page">
 
-            </div>
-            <div className="landing-card">
-                <div className="landing-section">
-                    <button className="button" onClick={() => navigate('/signup')}>
-                        New here? :<span style={{ margin: "2%", color: "#00ff00" }}> Sign Up</span>
-                    </button>
+            {/* Decorative blobs */}
+            <div className="blob blob-1"></div>
+            <div className="blob blob-2"></div>
+            <div className="blob blob-3"></div>
+
+            {/* Hero Section */}
+            <div className="landing-hero">
+
+                <div className="landing-brand">
+                    <div className="brand-icon">🎯</div>
+                    <h1 className="brand-title">INPREP<span>AI</span></h1>
                 </div>
 
-                <div className="landing-section">
-
-                    <button className="button" onClick={() => navigate('/login')}>
-                        Are u Back : <span style={{ margin: "2%", color: "#00ff00" }}>Login</span>
-                    </button>
+                <div className="landing-header">
+                    <p>Your AI-powered mock interview partner</p>
                 </div>
 
-                <div className="landing-section">
+                <div className="landing-divider"></div>
 
-                    <button className="button" onClick={() => navigate('/about')}>
-                        Are u Curious : <span style={{ margin: "2%", color: "#00ff00" }}>About-Us</span>
+                {/* Action Cards */}
+                <div className="landing-card">
+
+                    <button className="landing-btn btn-signup" onClick={() => navigate('/signup')}>
+                        <div className="btn-content">
+                            <span className="btn-emoji">🚀</span>
+                            <div className="btn-text">
+                                <span className="btn-label">New here?</span>
+                                <span className="btn-action">Sign Up</span>
+                            </div>
+                        </div>
+                        <span className="btn-arrow">→</span>
                     </button>
+
+                    <button className="landing-btn btn-login" onClick={() => navigate('/login')}>
+                        <div className="btn-content">
+                            <span className="btn-emoji">👋</span>
+                            <div className="btn-text">
+                                <span className="btn-label">Are you back?</span>
+                                <span className="btn-action">Login</span>
+                            </div>
+                        </div>
+                        <span className="btn-arrow">→</span>
+                    </button>
+
+                    <button className="landing-btn btn-about" onClick={() => navigate('/about')}>
+                        <div className="btn-content">
+                            <span className="btn-emoji">💡</span>
+                            <div className="btn-text">
+                                <span className="btn-label">Are you curious?</span>
+                                <span className="btn-action">About Us</span>
+                            </div>
+                        </div>
+                        <span className="btn-arrow">→</span>
+                    </button>
+
                 </div>
 
             </div>
