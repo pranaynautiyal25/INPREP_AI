@@ -1,79 +1,471 @@
-.dev-main {
-    height: 100%;
-    width: 100%;
+/* ─── Page Shell ─── */
+.dev-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #1a1263, #24243e);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    padding-top: 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ─── Blobs ─── */
+.blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.25;
+    pointer-events: none;
+    animation: floatBlob 10s ease-in-out infinite alternate;
+    z-index: 0;
+}
+
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #6c63ff, #3b2fcf);
+    top: -100px;
+    left: -120px;
+    animation-duration: 9s;
+}
+
+.blob-2 {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, #00d4ff, #0080ff);
+    bottom: -80px;
+    right: -80px;
+    animation-duration: 12s;
+}
+
+.blob-3 {
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, #ff6fd8, #9b59b6);
+    top: 50%;
+    left: 55%;
+    animation-duration: 14s;
+}
+
+@keyframes floatBlob {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(28px, 36px) scale(1.07);
+    }
+}
+
+/* ─── Inner Wrapper ─── */
+.dev-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 28px 56px;
     display: flex;
-
+    flex-direction: column;
+    gap: 22px;
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.dev-header {
-    margin-top: 23vh;
-    margin-left: 35vh;
-    border-radius: 40px;
-    padding: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    color: blue;
-    height: 57vh;
-    width: 50vh;
-    background-color: white;
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-
-.dev-options {
-    margin-top: 23vh;
-    margin-left: 10vh;
-    border-radius: 40px;
-    padding: 20px;
-    height: 42vh;
-    width: 50.3vh;
-    background-color: white;
-}
-
-.dev-button {
-    height: 20vh;
-    width: 24vh;
-    background-color: black;
-    color: white;
-    border-radius: 23px;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-
-}
-
-.dev-button:hover {
-    background-color: orangered;
-}
-.dev-button:active{
-    background-color: red;
-}
-
-.dev-manybuttons {
+/* ─── Top Bar ─── */
+.dev-topbar {
     display: flex;
-    gap: 17px;
-}
-
-.dev-back{
-    margin-top: 2vh;
-    margin-left: 10vh;
-    border-radius: 50px;
-    padding: 20px;
-    color: rgb(255, 255, 255);
-    height: 10vh;
-    width: 55.7vh;
-    background-color: rgb(0, 0, 0);
-    display:flex;
-    border: 15px solid #ffffff;
     align-items: center;
-    font-size:larger;
-    
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 20px;
+    padding: 14px 22px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
-.dev-back:hover{
-    background-color: orangered;
+.dev-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.13);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
 }
 
-.dev-back:active{
-    background-color: red;
+.dev-back-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    transform: translateX(-2px);
+}
+
+.dev-topbar-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    justify-content: center;
+}
+
+.dev-tag {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #0284c7, #06b6d4);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.38);
+    flex-shrink: 0;
+}
+
+.dev-heading {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.4px;
+}
+
+.dev-topbar-right {
+    width: 100px;
+    flex-shrink: 0;
+}
+
+/* ─── Quote Card ─── */
+.dev-quote-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    padding: 24px 28px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.dev-quote-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #0284c7, #06b6d4);
+    border-radius: 20px 20px 0 0;
+}
+
+.dev-quote-mark {
+    font-size: 72px;
+    line-height: 0.75;
+    color: rgba(6, 182, 212, 0.3);
+    font-family: Georgia, serif;
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 4px;
+    user-select: none;
+}
+
+.dev-quote-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dev-quote-text {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.7;
+    font-weight: 500;
+    font-style: italic;
+    margin: 0;
+}
+
+.dev-quote-author {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(6, 182, 212, 0.75);
+    letter-spacing: 0.3px;
+}
+
+/* ─── Section Label ─── */
+.dev-section-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-left: 2px;
+}
+
+.dev-section-icon {
+    font-size: 16px;
+}
+
+/* ─── Category Grid ─── */
+.dev-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    height: 250px
+}
+
+/* ─── Category Buttons ─── */
+.dev-cat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 24px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+    overflow: hidden;
+    animation: catIn 0.5s ease both;
+}
+
+.dev-cat-btn:nth-child(1) {
+    animation-delay: 0.08s;
+}
+
+.dev-cat-btn:nth-child(2) {
+    animation-delay: 0.16s;
+}
+
+.dev-cat-btn:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+.dev-cat-btn:nth-child(4) {
+    animation-delay: 0.32s;
+}
+
+@keyframes catIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.dev-cat-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.07);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: inherit;
+}
+
+.dev-cat-btn:hover::after {
+    opacity: 1;
+}
+
+.dev-cat-btn:hover {
+    transform: translateY(-4px);
+}
+
+.dev-cat-btn:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* ─── Color Variants ─── */
+.dev-cat-btn--frontend {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    box-shadow: 0 8px 28px rgba(79, 70, 229, 0.38);
+}
+
+.dev-cat-btn--frontend:hover {
+    box-shadow: 0 14px 36px rgba(79, 70, 229, 0.55);
+}
+
+.dev-cat-btn--backend {
+    background: linear-gradient(135deg, #0284c7, #06b6d4);
+    box-shadow: 0 8px 28px rgba(6, 182, 212, 0.35);
+}
+
+.dev-cat-btn--backend:hover {
+    box-shadow: 0 14px 36px rgba(6, 182, 212, 0.52);
+}
+
+.dev-cat-btn--fullstack {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    box-shadow: 0 8px 28px rgba(245, 158, 11, 0.35);
+}
+
+.dev-cat-btn--fullstack:hover {
+    box-shadow: 0 14px 36px rgba(245, 158, 11, 0.52);
+}
+
+.dev-cat-btn--database {
+    background: linear-gradient(135deg, #059669, #10b981);
+    box-shadow: 0 8px 28px rgba(16, 185, 129, 0.35);
+}
+
+.dev-cat-btn--database:hover {
+    box-shadow: 0 14px 36px rgba(16, 185, 129, 0.52);
+}
+
+/* ─── Button Inner Layout ─── */
+.dev-cat-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.dev-cat-emoji {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.dev-cat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.dev-cat-label {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 0.2px;
+}
+
+.dev-cat-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.4px;
+    line-height: 1.1;
+}
+
+.dev-cat-arrow {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: transform 0.22s ease, color 0.22s ease;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.dev-cat-btn:hover .dev-cat-arrow {
+    transform: translateX(6px);
+    color: #ffffff;
+}
+
+/* ─── Responsive: Tablet ─── */
+@media (max-width: 640px) {
+    .dev-inner {
+        padding: 18px 16px 40px;
+        gap: 16px;
+    }
+
+    .dev-topbar {
+        padding: 12px 16px;
+        border-radius: 16px;
+    }
+
+    .dev-back-btn span {
+        display: none;
+    }
+
+    .dev-back-btn {
+        padding: 9px 12px;
+    }
+
+    .dev-heading {
+        font-size: 14px;
+    }
+
+    .dev-topbar-right {
+        display: none;
+    }
+
+    .dev-quote-card {
+        padding: 18px 18px;
+    }
+
+    .dev-quote-mark {
+        font-size: 52px;
+    }
+
+    .dev-quote-text {
+        font-size: 14.5px;
+    }
+
+    .dev-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .dev-cat-btn {
+        padding: 18px 20px;
+        border-radius: 16px;
+    }
+
+    .dev-cat-emoji {
+        font-size: 26px;
+    }
+
+    .dev-cat-name {
+        font-size: 18px;
+    }
+
+    .blob {
+        opacity: 0.14;
+    }
+}
+
+/* ─── Responsive: Small phones ─── */
+@media (max-width: 380px) {
+    .dev-heading {
+        display: none;
+    }
+
+    .dev-cat-btn {
+        padding: 16px 16px;
+    }
+
+    .dev-cat-emoji {
+        font-size: 22px;
+    }
+
+    .dev-cat-name {
+        font-size: 16px;
+    }
 }

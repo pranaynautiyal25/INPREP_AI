@@ -48,7 +48,7 @@ const Dashboard = () => {
 
     const nextDsa = () => { if (traverse1 + 4 < dsa.length) setTraverse1(traverse1 + 4); }
     const prevDsa = () => { if (traverse1 - 4 >= 0) setTraverse1(traverse1 - 4); }
-    const nextDev = () => { if (traverse2 + 4 < dsa.length) setTraverse2(traverse2 + 4); }
+    const nextDev = () => { if (traverse2 + 4 < dev.length) setTraverse2(traverse2 + 4); }
     const prevDev = () => { if (traverse2 - 4 >= 0) setTraverse2(traverse2 - 4); }
 
     const visibleDsa = (Array.isArray(dsa) ? dsa : [])

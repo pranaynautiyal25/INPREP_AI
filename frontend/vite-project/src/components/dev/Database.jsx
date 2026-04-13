@@ -1,256 +1,294 @@
 import React, { useState, useRef } from 'react';
-import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner } from 'react-icons/fa';
+import './Database.css';
+import { FaMicrophone, FaSyncAlt, FaArrowLeft, FaPlay, FaSpinner, FaStop } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../config/axios'
+import axios from '../../config/axios';
 import { useAuth } from '../../Context/AuthContext';
 
 const Database = () => {
-    const navigate = useNavigate();
-    const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-    const [text, setText] = useState("");
-    const [listening, setListening] = useState(false);
-    const [start, setStart] = useState(false);
+  const [text, setText] = useState("");
+  const [listening, setListening] = useState(false);
+  const [start, setStart] = useState(false);
 
+  const [question1, setQuestion1] = useState('');
+  const [question2, setQuestion2] = useState('');
+  const [question3, setQuestion3] = useState('');
+  const [question4, setQuestion4] = useState('');
 
-    const [question1, setQuestion1] = useState('');
-    const [question2, setQuestion2] = useState('');
-    const [question3, setQuestion3] = useState('');
-    const [question4, setQuestion4] = useState('');
-    //const [question5, setQuestion5] = useState('');
+  const [answer1, setAnswer1] = useState('');
+  const [answer2, setAnswer2] = useState('');
+  const [answer3, setAnswer3] = useState('');
+  const [answer4, setAnswer4] = useState('');
 
+  const [speech, setSpeech] = useState('');
+  const [ansEval, setAnsEval] = useState({});
+  const [comEval, setComEval] = useState({});
 
-    const [answer1, setAnswer1] = useState('');
-    const [answer2, setAnswer2] = useState('');
-    const [answer3, setAnswer3] = useState('');
-    const [answer4, setAnswer4] = useState('');
-    // const [answer5, setAnswer5] = useState('');
+  const recognitionRef = useRef(null);
 
-    const [speech, setSpeech] = useState('');
-    const [ansEval, setAnsEval] = useState({});
-    const [comEval, setComEval] = useState({});
+  const handleMicClick = () => {
+    if (start === false) {
+      window.alert('Start the test first');
+      return;
+    }
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
-
-    const recognitionRef = useRef(null);
-
-    const handleMicClick = () => {
-        if (start === false) {
-            window.alert('start the test first');
-            return;
-        }
-        const SpeechRecognition =
-            window.SpeechRecognition || window.webkitSpeechRecognition;
-
-        if (!SpeechRecognition) {
-            alert("Speech Recognition not supported in this browser");
-            return;
-        }
-
-        if (!listening) {
-            // START LISTENING
-            const recognition = new SpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
-            recognition.lang = "en-US";
-
-            recognition.onresult = (event) => {
-                let transcript = "";
-                for (let i = 0; i < event.results.length; i++) {
-                    transcript += event.results[i][0].transcript;
-                }
-                setText(transcript);
-            };
-
-            recognition.start();
-            recognitionRef.current = recognition;
-            setListening(true);
-
-        } else {
-            // STOP LISTENING
-            recognitionRef.current.stop();
-            setListening(false);
-        }
-    };
-
-    const handleStart = async () => {
-        if (start === true) {
-            return;
-        }
-
-
-        //ai connection
-        try {
-            const res = await axios.post('/api/ai/generate-database');
-            setQuestion1(res.data.question1);
-            setQuestion2(res.data.question2);
-            setQuestion3(res.data.question3);
-            setQuestion4(res.data.question4);
-            setStart(true);
-        }
-        catch (error) {
-            alert('failed to generate question');
-        }
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported in this browser");
+      return;
     }
 
-    const handleEvaluation = async () => {
+    if (!listening) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
 
-        const finalAns1 = answer1.trim();
-        const finalAns2 = answer2.trim();
-        const finalAns3 = answer3.trim();
-        const finalAns4 = answer4.trim();
-
-        const spokenApproach = text.trim();
-
-        if (finalAns1 == '' || finalAns2 == '' || finalAns3 == '' || finalAns4 == '' || spokenApproach == '') {
-            alert('Complete Your Test First');
-            return;
+      recognition.onresult = (event) => {
+        let transcript = "";
+        for (let i = 0; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
         }
+        setText(transcript);
+      };
 
-        setStart(false);
-        setListening(false);
+      recognition.start();
+      recognitionRef.current = recognition;
+      setListening(true);
+    } else {
+      recognitionRef.current.stop();
+      setListening(false);
+    }
+  };
 
-        //ai connection
+  const handleStart = async () => {
+    if (start === true) return;
 
-        try {
-            const questions = [question1, question2, question3, question4];
-            const answers = [finalAns1, finalAns2, finalAns3, finalAns4];
+    try {
+      const res = await axios.post('/api/ai/generate-database');
+      setQuestion1(res.data.question1);
+      setQuestion2(res.data.question2);
+      setQuestion3(res.data.question3);
+      setQuestion4(res.data.question4);
+      setStart(true);
+    } catch (error) {
+      alert('Failed to generate question. Please try again.');
+    }
+  };
 
-            const res = await axios.post('/api/ai/evaluate-database', { questions, answers, spokenApproach });
-            const yourAnswer = res.data.yourAnswers;
-            const correctAnswer = res.data.correctAnswers;
-            const answerScore = res.data.answerScores;
-            const explainationScore = res.data.explanationScore;
-            const improvementScope = res.data.improvementScope;
+  const handleEvaluation = async () => {
+    const finalAns1 = answer1.trim();
+    const finalAns2 = answer2.trim();
+    const finalAns3 = answer3.trim();
+    const finalAns4 = answer4.trim();
+    const spokenApproach = text.trim();
 
-            const payload = {
-                email: user.UserEmail,
-                category: "Database",
-                question: questions,
-                yourAnswer: yourAnswer,
-                correctAnswer: correctAnswer,
-                answerScore: answerScore,
-                explainationScore: explainationScore,
-                improvementScope: improvementScope
-            }
-
-            await axios.post('/api/backend/saveBackend', payload);
-            alert('exam saved successfully', res);
-        }
-        catch (error) {
-            alert('failed to save exam');
-        }
-
-
-        navigate('/dashboard');
+    if (!finalAns1 || !finalAns2 || !finalAns3 || !finalAns4 || !spokenApproach) {
+      alert('Complete Your Test First');
+      return;
     }
 
-    const handleBack = () => {
-        if (start == true) {
-            window.alert('Database Exam Ongoing');
-            return;
-        }
+    setStart(false);
+    setListening(false);
 
-        navigate('/dev');
+    try {
+      const questions = [question1, question2, question3, question4];
+      const answers = [finalAns1, finalAns2, finalAns3, finalAns4];
+
+      const res = await axios.post('/api/ai/evaluate-database', { questions, answers, spokenApproach });
+      const yourAnswer = res.data.yourAnswers;
+      const correctAnswer = res.data.correctAnswers;
+      const answerScore = res.data.answerScores;
+      const explainationScore = res.data.explanationScore;
+      const improvementScope = res.data.improvementScope;
+
+      const payload = {
+        email: user.UserEmail,
+        category: "Database",
+        question: questions,
+        yourAnswer,
+        correctAnswer,
+        answerScore,
+        explainationScore,
+        improvementScope,
+      };
+
+      await axios.post('/api/backend/saveBackend', payload);
+      alert('Exam saved successfully');
+    } catch (error) {
+      alert('Failed to save exam');
     }
 
-    return (
-        <div className='dsa-main'>
+    navigate('/dashboard');
+  };
 
+  const handleBack = () => {
+    if (start === true) {
+      window.alert('Database Exam Ongoing');
+      return;
+    }
+    navigate('/dev');
+  };
 
-            <div className="dsa-top" style={{ marginBottom: '8px', borderColor: "white", backgroundColor: 'black' }}>
-                <div className="dsa-header">
-                    <button className="back-button" onClick={handleBack}>
-                        <FaArrowLeft />
-                    </button>
-                    <h1><span style={{ color: '#00c2fd', marginLeft: '20px', fontSize: '4vh' }}><b>DATABASE-PREP</b></span></h1>
-                </div>
+  const questions = [
+    { num: 1, text: question1 },
+    { num: 2, text: question2 },
+    { num: 3, text: question3 },
+    { num: 4, text: question4 },
+  ];
 
-                <span style={{ color: '#3b82f6' }}>{listening ? "Listening..." : ""}</span>
+  const answers = [
+    { num: 1, value: answer1, setter: setAnswer1 },
+    { num: 2, value: answer2, setter: setAnswer2 },
+    { num: 3, value: answer3, setter: setAnswer3 },
+    { num: 4, value: answer4, setter: setAnswer4 },
+  ];
 
-                <div className="dsa-audio">
-                    <button className="mic-button" onClick={handleMicClick}>
-                        <FaMicrophone />
-                    </button>
-                    <button className='mic-button' onClick={() => setText("")}>
-                        <FaSyncAlt />
-                    </button>
-                    <button className="mic-button" onClick={handleStart}>
-                        {start ? <FaSpinner className="spin-icon" /> : <FaPlay />}
-                    </button>
-                </div>
+  return (
+    <div className="fe-page">
+
+      {/* Blobs */}
+      <div className="blob blob-1"></div>
+      <div className="blob blob-2"></div>
+      <div className="blob blob-3"></div>
+
+      <div className="fe-inner">
+
+        {/* ── Top Bar ── */}
+        <div className="fe-topbar">
+
+          <div className="fe-topbar-left">
+            <button className="fe-back-btn" onClick={handleBack}>
+              <FaArrowLeft />
+              <span>Back</span>
+            </button>
+            <div className="fe-title-wrap">
+              <span className="fe-tag">DB</span>
+              <h1 className="fe-title">DATABASE-PREP</h1>
             </div>
+          </div>
 
+          <div className="fe-topbar-center">
+            {listening && (
+              <div className="listening-badge">
+                <span className="listening-dot"></span>
+                Listening...
+              </div>
+            )}
+          </div>
 
-            <div className="dsa-middle">
+          <div className="fe-topbar-right">
 
-                <div className="dsa-question">
-                    <h3><span style={{ color: '#3742e1' }}><b>Question 1</b></span></h3>
-                    <p>
-                        {question1 || "Question will appear here"}
-                    </p>
-                    <h3><span style={{ color: '#3742e1' }}><b>Question 2</b></span></h3>
-                    <p>
-                        {question2 || "question will appear here"}
-                    </p>
+            {/* Start button */}
+            <button
+              className={`fe-ctrl-btn fe-ctrl-btn--start ${start ? 'active' : ''}`}
+              onClick={handleStart}
+              title={start ? "Test Running" : "Start Test"}
+            >
+              {start
+                ? <FaSpinner className="spin-icon" />
+                : <FaPlay />
+              }
+              <span>{start ? "Running" : "Start"}</span>
+            </button>
 
-                    <h3><span style={{ color: '#3742e1' }}><b>Question 3</b></span></h3>
-                    <p>
-                        {question3 || "question will appear here"}
-                    </p>
+            {/* Mic button */}
+            <button
+              className={`fe-ctrl-btn fe-ctrl-btn--mic ${listening ? 'mic-active' : ''}`}
+              onClick={handleMicClick}
+              title={listening ? "Stop Mic" : "Start Mic"}
+            >
+              {listening ? <FaStop /> : <FaMicrophone />}
+              <span>{listening ? "Stop" : "Mic"}</span>
+            </button>
 
-                    <h3><span style={{ color: '#3742e1' }}><b>Question 4</b></span></h3>
-                    <p>
-                        {question4 || "question will appear here"}
-                    </p>
+            {/* Clear speech */}
+            <button
+              className="fe-ctrl-btn fe-ctrl-btn--reset"
+              onClick={() => setText("")}
+              title="Clear Speech"
+            >
+              <FaSyncAlt />
+              <span>Clear</span>
+            </button>
 
-
-
-
-                </div>
-
-                <div className="dsa-code">
-                    <textarea
-                        placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 1 : ANSWER/CODE)"
-                        value={answer1}
-                        onChange={(e) => setAnswer1(e.target.value)}
-                    ></textarea>
-
-                    <textarea
-                        placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 2 : ANSWER/CODE)"
-                        value={answer2}
-                        onChange={(e) => setAnswer2(e.target.value)}
-                    ></textarea>
-
-                    <textarea
-                        placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 3 : ANSWER/CODE)"
-                        value={answer3}
-                        onChange={(e) => setAnswer3(e.target.value)}
-                    ></textarea>
-
-                    <textarea
-                        placeholder="WRITE YOUR ANSWERS HERE, FORMAT->(QUESTION 4 : ANSWER/CODE)"
-                        value={answer4}
-                        onChange={(e) => setAnswer4(e.target.value)}
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-
-            <div className="dsa-bottom">
-
-                <div className="audio-text">
-                    {text || "Your speech will appear here..."}
-                </div>
-
-                <div className="dsa-button">
-                    <button className="" onClick={handleEvaluation}>Submit and Evaluate</button>
-                </div>
-
-            </div>
+          </div>
         </div>
-    )
-}
+
+        {/* ── Middle: Questions + Answers ── */}
+        <div className="fe-workspace">
+
+          {/* Questions Panel */}
+          <div className="fe-panel fe-panel--questions">
+            <div className="fe-panel-header">
+              <span className="fe-panel-icon">❓</span>
+              <span className="fe-panel-label">Questions</span>
+              {start && <span className="fe-live-badge">LIVE</span>}
+            </div>
+
+            <div className="fe-questions-list">
+              {questions.map(({ num, text }) => (
+                <div className="fe-question-item" key={num}>
+                  <div className="fe-question-num">Q{num}</div>
+                  <p className="fe-question-text">
+                    {text || `Question ${num} will appear here once you start the test...`}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Answers Panel */}
+          <div className="fe-panel fe-panel--answers">
+            <div className="fe-panel-header">
+              <span className="fe-panel-icon">✍️</span>
+              <span className="fe-panel-label">Your Answers</span>
+            </div>
+            <div className="fe-answers-wrap">
+              {answers.map(({ num, value, setter }) => (
+                <div className="fe-answer-block" key={num}>
+                  <div className="fe-answer-label">Answer {num}</div>
+                  <textarea
+                    className="fe-textarea"
+                    placeholder={`Write your answer for Question ${num} here...`}
+                    value={value}
+                    onChange={(e) => setter(e.target.value)}
+                    spellCheck={false}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── Bottom: Speech + Submit ── */}
+        <div className="fe-bottom">
+
+          <div className="fe-speech-panel">
+            <div className="fe-panel-header">
+              <span className="fe-panel-icon">🎙️</span>
+              <span className="fe-panel-label">Your Spoken Explanation</span>
+            </div>
+            <div className={`fe-speech-text ${text ? '' : 'placeholder'}`}>
+              {text || "Your speech will appear here as you speak..."}
+            </div>
+          </div>
+
+          <button className="fe-submit-btn" onClick={handleEvaluation}>
+            <span>Submit & Evaluate</span>
+            <span className="fe-submit-arrow">→</span>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  );
+};
 
 export default Database;

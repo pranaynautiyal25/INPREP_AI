@@ -4,10 +4,18 @@ import './About.css'
 
 const About = () => {
     return (
-        <div className='main'>
-            <div className='header'>
+        <div className='about-page'>
+
+            {/* Blobs */}
+            <div className="blob blob-1"></div>
+            <div className="blob blob-2"></div>
+            <div className="blob blob-3"></div>
+
+            <div className='about-inner'>
                 <div className='about-card'>
-                    <h1>About<span style={{ margin: "2%", color: "#0062ff" }}>INPREP-AI</span></h1>
+                    <h1 className="about-title">
+                        About<span className="highlight">INPREP-AI</span>
+                    </h1>
 
                     <p>
                         INPREP-AI is an innovative platform designed to help
