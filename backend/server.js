@@ -7,6 +7,7 @@ const frontendRouter = require('./routes/frontendRoutes')
 const backendRouter = require('./routes/backendRoutes');
 const databaseRouter = require('./routes/databaseRoute');
 const fullstackRouter = require('./routes/fullstackRoutes');
+require('dotenv').config();
 
 const app = express();
 const cors = require('cors');
@@ -28,6 +29,8 @@ app.get('/', (req, res) => {
     res.send('hello world');
 });
 
-app.listen(5000, () => {
-    console.log(`server running on localhost:${5000}`);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`server running on port ${PORT}`);
 });
