@@ -27,6 +27,9 @@ const FullStack = () => {
   const [ansEval, setAnsEval] = useState({});
   const [comEval, setComEval] = useState({});
 
+  const [isStarting, setIsStarting] = useState(false);      // lock for Start button
+  const [isEvaluating, setIsEvaluating] = useState(false);  // lock for Evaluate button
+
   const recognitionRef = useRef(null);
 
   const handleMicClick = () => {
@@ -66,8 +69,8 @@ const FullStack = () => {
   };
 
   const handleStart = async () => {
-    if (start === true) return;
-
+    if (isStarting || start) return;  // block if already loading or already started
+    setIsStarting(true);
     try {
       const res = await axios.post('/api/ai/generate-fullstack');
       setQuestion1(res.data.question1);
@@ -77,10 +80,14 @@ const FullStack = () => {
       setStart(true);
     } catch (error) {
       alert('Failed to generate question. Please try again.');
+    } finally {
+      setIsStarting(false);  // always release lock
     }
   };
 
   const handleEvaluation = async () => {
+    if (isEvaluating) return;  // block if already in progress
+
     const finalAns1 = answer1.trim();
     const finalAns2 = answer2.trim();
     const finalAns3 = answer3.trim();
@@ -94,6 +101,7 @@ const FullStack = () => {
 
     setStart(false);
     setListening(false);
+    setIsEvaluating(true);
 
     try {
       const questions = [question1, question2, question3, question4];
@@ -119,11 +127,12 @@ const FullStack = () => {
 
       await axios.post('/api/fullstack/saveFullstack', payload);
       alert('Exam saved successfully');
+      navigate('/dashboard');
     } catch (error) {
       alert('Failed to save exam');
+    } finally {
+      setIsEvaluating(false);  // always release lock
     }
-
-    navigate('/dashboard');
   };
 
   const handleBack = () => {
@@ -186,10 +195,16 @@ const FullStack = () => {
             <button
               className={`fe-ctrl-btn fe-ctrl-btn--start ${start ? 'active' : ''}`}
               onClick={handleStart}
-              title={start ? "Test Running" : "Start Test"}
+              disabled={isStarting || start}
+              title={isStarting ? "Generating..." : start ? "Test Running" : "Start Test"}
             >
-              {start ? <FaSpinner className="spin-icon" /> : <FaPlay />}
-              <span>{start ? "Running" : "Start"}</span>
+              {isStarting
+                ? <FaSpinner className="spin-icon" />
+                : start
+                  ? <FaSpinner className="spin-icon" />
+                  : <FaPlay />
+              }
+              <span>{isStarting ? "Loading..." : start ? "Running" : "Start"}</span>
             </button>
 
             <button
@@ -270,9 +285,15 @@ const FullStack = () => {
             </div>
           </div>
 
-          <button className="fe-submit-btn" onClick={handleEvaluation}>
-            <span>Submit & Evaluate</span>
-            <span className="fe-submit-arrow">→</span>
+          <button
+            className="fe-submit-btn"
+            onClick={handleEvaluation}
+            disabled={isEvaluating}
+          >
+            <span>{isEvaluating ? "Evaluating..." : "Submit & Evaluate"}</span>
+            <span className="fe-submit-arrow">
+              {isEvaluating ? <FaSpinner className="spin-icon" /> : "→"}
+            </span>
           </button>
 
         </div>
