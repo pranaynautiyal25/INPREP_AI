@@ -10,9 +10,14 @@ const fullstackRouter = require('./routes/fullstackRoutes');
 require('dotenv').config();
 
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 
-app.use(cors());
+app.use(cors({
+    origin: "https://inprep-ai-frontend.onrender.com",
+    credentials: true
+}));
+
+app.options("*", cors());
 
 connectDB();
 
