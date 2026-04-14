@@ -1,5 +1,5 @@
 import React from 'react'
-import './dev.css'
+import './Dev.css'
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
