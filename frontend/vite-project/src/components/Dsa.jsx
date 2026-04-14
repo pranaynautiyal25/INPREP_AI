@@ -21,6 +21,9 @@ const Dsa = () => {
     const [codeEval, setCodeEval] = useState({});
     const [comEval, setComEval] = useState({});
 
+    const [isStarting, setIsStarting] = useState(false);       // lock for Start button
+    const [isEvaluating, setIsEvaluating] = useState(false);   // lock for Evaluate button
+
     const recognitionRef = useRef(null);
 
     const handleMicClick = () => {
@@ -60,6 +63,8 @@ const Dsa = () => {
     };
 
     const handleStart = async () => {
+        if (isStarting) return;   // block if already in progress
+        setIsStarting(true);
         try {
             const res = await axios.post('/api/ai/generate-question');
             setQuestion(res.data.question);
@@ -67,10 +72,13 @@ const Dsa = () => {
             setStart(true);
         } catch (error) {
             alert('Failed to generate question. Please try again.');
+        } finally {
+            setIsStarting(false);  // always release lock
         }
     }
 
     const handleEvaluation = async () => {
+        if (isEvaluating) return;  // block if already in progress
         if (!start) {
             alert('Start the test first');
             return;
@@ -89,6 +97,7 @@ const Dsa = () => {
         }
 
         setSpeech(spokenApproach);
+        setIsEvaluating(true);
 
         try {
             const evalRes = await axios.post('/api/ai/evaluate', {
@@ -118,6 +127,8 @@ const Dsa = () => {
             navigate('/dashboard');
         } catch (error) {
             alert(error?.response?.data?.message || 'Evaluation failed');
+        } finally {
+            setIsEvaluating(false);  // always release lock
         }
     }
 
@@ -168,13 +179,16 @@ const Dsa = () => {
                         <button
                             className={`dsa-ctrl-btn dsa-ctrl-btn--start ${start ? 'active' : ''}`}
                             onClick={handleStart}
-                            title={start ? "Test Running" : "Start Test"}
+                            disabled={isStarting || start}
+                            title={isStarting ? "Generating..." : start ? "Test Running" : "Start Test"}
                         >
-                            {start
+                            {isStarting
                                 ? <FaSpinner className="spin-icon" />
-                                : <FaPlay />
+                                : start
+                                    ? <FaSpinner className="spin-icon" />
+                                    : <FaPlay />
                             }
-                            <span>{start ? "Running" : "Start"}</span>
+                            <span>{isStarting ? "Loading..." : start ? "Running" : "Start"}</span>
                         </button>
 
                         {/* Mic button */}
@@ -260,9 +274,13 @@ const Dsa = () => {
                         </div>
                     </div>
 
-                    <button className="dsa-submit-btn" onClick={handleEvaluation}>
-                        <span>Submit & Evaluate</span>
-                        <span className="dsa-submit-arrow">→</span>
+                    <button
+                        className="dsa-submit-btn"
+                        onClick={handleEvaluation}
+                        disabled={isEvaluating}
+                    >
+                        <span>{isEvaluating ? "Evaluating..." : "Submit & Evaluate"}</span>
+                        <span className="dsa-submit-arrow">{isEvaluating ? <FaSpinner className="spin-icon" /> : "→"}</span>
                     </button>
 
                 </div>

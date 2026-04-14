@@ -61,7 +61,7 @@ const Signup = () => {
                 {/* Brand Header */}
                 <div className="signup-brand">
                     <div className="brand-icon">🎯</div>
-                    <h1 className="brand-title">INPREP<span>AI</span></h1>
+                    <h1 className="brand-title"><span>INPREP AI</span></h1>
                 </div>
 
                 <div className="signup-header">
